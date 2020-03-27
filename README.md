@@ -12,13 +12,13 @@ Kafka documentations:
     
 ## Steps to Reproduce:
   ### Establish connection to the Database
-    1. clone or download the repo
-    2. install Kafka and Zookeeper
-    3. start Zookeeper and Kafka server
+   1. clone or download the repo
+   2. install Kafka and Zookeeper
+   3. start Zookeeper and Kafka server
       'bin/zookeeper-server-start.sh config/zookeeper.properties'
       'bin/kafka-server-start.sh config/server.properties'
-    4. establish connection to the MongoAtlas Database
-    5. run kafka producer and consumer
+   4. establish connection to the MongoAtlas Database
+   5. run kafka producer and consumer
        'python producer.py'
        'python consumer.py'
    ### TO DO
