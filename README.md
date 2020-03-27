@@ -12,8 +12,7 @@ COVID19 API:
     KishCom
 		https://rapidapi.com/KishCom/api/covid-19-coronavirus-statistics
 		
-Kafka documentations:
-
+Kafka documentations
 		https://towardsdatascience.com/kafka-python-explained-in-10-lines-of-code-800e3e07dad1
  
  
