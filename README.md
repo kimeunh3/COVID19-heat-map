@@ -1,6 +1,7 @@
 # COVID19-heat-map
 Objectvie: To produce a web application which displays real-time statistics of COVID19 cases and deaths for cities in America.
-
+Ashley Kim ashleykim0506@gmail.com
+EunHye Kim
 
 ## Credits:
 COVID19 API:
