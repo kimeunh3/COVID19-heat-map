@@ -44,7 +44,7 @@ Kafka documentations
    
    1. run `npm install`
    
-   	1-2. If Error: Cannot find module 'express', try `npm install express`
+   1-2. If Error: Cannot find module 'express', try `npm install express`
    
    2. run `npm start`
    
