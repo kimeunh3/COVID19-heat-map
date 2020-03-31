@@ -40,6 +40,7 @@ Kafka documentations
        `python consumer.py`
        
        
+       
    ### Create Backend
    
    1. run `npm install`
@@ -49,6 +50,10 @@ Kafka documentations
    2. run `npm start`
    
    3. test endpoints ex. http://localhost:3120/cityCovid/?city=<city>&state=<state>
+	
+	
+	
+   ### Create Frontend
 
 
 
