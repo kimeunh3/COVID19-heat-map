@@ -128,8 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#credentials
+# credentials
 ./cred.py
 cred.py
 cred
 kafka/cred.py
+
+# kafka batch and shell files
+./kafka_2.13-2.4.1*
