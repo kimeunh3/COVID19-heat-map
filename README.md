@@ -19,7 +19,7 @@ Kafka documentations
     
 ## Steps to Reproduce:
 
-  ### Establish connection to the MongoAtlas Database
+  ### Connect API, Kafka, and MongoAtlas Database
   
    1. clone or download the repo
    
@@ -40,5 +40,16 @@ Kafka documentations
        `python consumer.py`
        
        
-   ### TO DO
+   ### Create Backend
+   
+   1. run `npm install`
+   
+   	1-2. If Error: Cannot find module 'express', try `npm install express`
+   
+   2. run `npm start`
+   
+   3. test endpoints ex. http://localhost:3120/cityCovid/?city=<city>&state=<state>
+
+
+
   
