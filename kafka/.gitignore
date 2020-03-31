@@ -135,4 +135,7 @@ cred
 kafka/cred.py
 
 # kafka batch and shell files
-./kafka_2.13-2.4.1*
+kafka_2.13-2.4.1/*
+/kafka_2.13-2.4.1/*
+./kafka_2.13-2.4.1/*
+kafka_2.13-2.4.1/
