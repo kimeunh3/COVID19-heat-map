@@ -107,3 +107,9 @@ dist
 .constants.js
 constants.js
 ./constants.js
+
+# node_modules
+./node_modules/*
+./node_modules/
+node_modules/*
+node_modules/
