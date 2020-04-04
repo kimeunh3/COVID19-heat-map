@@ -1,0 +1,20 @@
+.header {
+  text-align: center;
+  position: relative;
+}
+h1.title {
+  display: inline-block;
+  margin-right: 50px;
+}
+div.header > div {
+  display: inline-block;
+  position: absolute;
+  top: 25px;
+}
+.map {
+  text-align: center;
+}
+.link {
+  text-align: center;
+  margin: 50px 0;
+}
