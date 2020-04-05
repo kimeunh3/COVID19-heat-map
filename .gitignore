@@ -128,9 +128,14 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#credentials
+# credentials
 ./cred.py
 cred.py
 cred
 kafka/cred.py
 
+# node_modules
+./node_modules/*
+./node_modules/
+node_modules/*
+node_modules/
