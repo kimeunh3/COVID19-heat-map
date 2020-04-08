@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./Home.css";
 import { ReactComponent as ReactMap } from "./Blank_US_Map.svg";
 import $ from "jquery";
 import { Link } from "react-router-dom"; 

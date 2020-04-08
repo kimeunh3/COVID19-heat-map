@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./Home.css";
 import img from "./Blank_US_Map.svg";
 
 class State extends React.Component {
