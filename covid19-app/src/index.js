@@ -9,21 +9,29 @@ class Test extends React.Component {
 
     this.state = {
       isLoading: true,
-      stats: '',
+      stats: [],
       location: this.props.value
     };
   }
 
-  componentDidMount(){
-    //  TO DO: connect backend and implement heat-map
+  async componentDidMount(){
+    //  TO DO: solve backend
     try{
-      let p1 = fetch('/stateCovid', {mode:"no-cors"})
-      .then(({ results }) => this.setState({ stats: results }));
+      await fetch('/stateCovid').then(response => 
+          response.json().then(data => ({
+              data: data,
+              status: response.status,
+          })
+      ).then(res => {
+          this.setState({ stats: res.data,
+                          isLoading: false})
+          console.log(res)
+    }));
     }catch (e) {
       alert(e);
     }
-    console.log("stats: ", this.stats);
-    this.setState({ isLoading: false });
+
+    {this.isLoading == false ? console.log(this.state.stats) : console.log('waiting')}
   }
 
   handleChangeValue(value){
@@ -32,9 +40,11 @@ class Test extends React.Component {
 
   handleClick() {
     //  TO DO: connect backend
+    let city = this.state.location.split(" ")[0];
+    let state = this.state.location.split(" ")[1];
     try{
-      fetch('/cityCovid')
-        .then(({ results }) => this.setState({ stats: results }));
+      fetch(`/cityCovid?city=${city}?state=${state}`)
+        .then(({ results }) => this.setState({ stats: results })); //need to pass data to new page
     }catch (e) {
       alert(e);
     }
@@ -55,9 +65,13 @@ class Test extends React.Component {
             </button>
           </div>
         </div>
-        
         <div className="map">
           {this.props.isLoading === true ? 'error' : <img src={img} />}
+          {this.state.stats.map(el => (
+            <li>
+              {el._id}: {el.confirmed}, {el.deaths}, {el.recovered}
+            </li>
+          ))}
         </div>
         <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">
