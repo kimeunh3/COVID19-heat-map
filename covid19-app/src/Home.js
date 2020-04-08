@@ -152,6 +152,16 @@ class Home extends React.Component {
     }
   }
 
+  renderUsStats(){
+    return (
+      <div className="centerStats">
+        <div className="stats">confirmed:  {this.state.usStats[0].confirmed}</div>
+        <div className="stats">deaths:  {this.state.usStats[0].deaths}</div>
+        <div className="stats">recovered:  {this.state.usStats[0].recovered}</div>
+      </div>
+      )
+  }
+
   render() {
     return (
       <div>
@@ -178,6 +188,7 @@ class Home extends React.Component {
             </Link>
           </div>
         </div>
+        <div>{this.state.usStatsLoading === false ? this.renderUsStats(): "helloWorld"}</div>
         <div className="map">
           {this.props.isLoading === true ? (
             "error"

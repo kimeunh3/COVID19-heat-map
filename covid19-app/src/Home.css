@@ -24,3 +24,13 @@ button {
   text-align: center;
   margin: 50px 0;
 }
+.centerStats {
+  margin-bottom: 40px;
+  margin-top: 25px;
+  text-align: center;
+  font-size: 20px; 
+}
+.stats {
+  padding: 3px;
+}
+
