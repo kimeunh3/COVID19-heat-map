@@ -31,6 +31,13 @@ Kafka documentations
       
       `bin/kafka-server-start.sh config/server.properties`
       
+       or (if want kafka and zookeeper to run in the background)
+       
+      `bin/zookeeper-server-start.sh -daemon config/zookeeper.properties`
+			
+      `bin/kafka-server-start.sh -daemon config/server.properties`
+      
+      
    4. establish connection to the MongoAtlas Database
    
    4-1. create cred.py and in the kafka root folder and populate with `username:<MongoDBusername> password=<MongoDBpassword> `
