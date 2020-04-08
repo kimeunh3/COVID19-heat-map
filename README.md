@@ -23,17 +23,26 @@ Kafka documentations
   
    1. clone or download the repo
    
-   2. install Kafka and Zookeeper
-   
-   3. start Zookeeper and Kafka server
+   2. start Zookeeper and Kafka server in the kafka root folder (kafka/kafka_2.11-1.0.0)
    
       `bin/zookeeper-server-start.sh config/zookeeper.properties`
       
       `bin/kafka-server-start.sh config/server.properties`
       
-   4. establish connection to the MongoAtlas Database
+      
+       or (if you want kafka and zookeeper to run in the background)
+       
+       
+      `bin/zookeeper-server-start.sh -daemon config/zookeeper.properties`
+			
+      `bin/kafka-server-start.sh -daemon config/server.properties`
+      
+      
+   3. establish connection to the MongoAtlas Database
    
-   5. run kafka producer and consumer
+   3-1. create cred.py in the kafka root folder and populate with `username:<MongoDBusername> password=<MongoDBpassword> `
+   
+   4. run kafka producer and consumer
    
        `python producer.py`
        
@@ -41,20 +50,57 @@ Kafka documentations
        
        
        
-   ### Create Backend
+   ### Run Backend
    
+   1. create RapidAPI username and password https://rapidapi.com/
+   
+   1-2. Create constants.js in the api root folder and populate with
+   
+   	`module.exports = Object.freeze({
+	    username: <rapidAPI username>,
+	    password: <rapidAPI password>
+	});`
+	
+   
+   2. run `npm install`
+   
+   2-1. If Error: Cannot find module 'express', try `npm install express`
+   
+   3. run `npm start`
+   
+   4. test endpoints cityCovid and stateCovid
+	
+   ex. go to postman and try GET `http://localhost:3120/cityCovid/?city=Denver&state=Colorado`
+   
+	`{
+	    "_id": "5e7d495e865bf2d33157dd20",
+	    "city": "Denver",
+	    "province": "Colorado",
+	    "country": "US",
+	    "lastUpdate": "2020-03-25 23:33:19",
+	    "keyId": "Denver, Colorado, US",
+	    "confirmed": 214,
+	    "deaths": 3,
+	    "recovered": 0
+	}`
+	
+	
+   ex. go to postman and try GET `http://localhost:3120/cityCovid/?city=Denver&state=Colorado`
+   
+	`{
+	   "_id": "Colorado",
+	   "confirmed": 2207,
+	   "deaths": 46,
+	   "recovered": 0,
+	}`
+	
+	
+	
+   ### Run Frontend
+
    1. run `npm install`
-   
-   1-2. If Error: Cannot find module 'express', try `npm install express`
    
    2. run `npm start`
    
-   3. test endpoints ex. http://localhost:3120/cityCovid/?city=<city>&state=<state>
-	
-	
-	
-   ### Create Frontend
-
-
 
   
