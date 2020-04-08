@@ -33,7 +33,7 @@ Kafka documentations
       
    4. establish connection to the MongoAtlas Database
    
-   	4-1. create cred.py and in the kafka root folder and populate with `username:<MongoDBusername> password=<MongoDBpassword> `
+   4-1. create cred.py and in the kafka root folder and populate with `username:<MongoDBusername> password=<MongoDBpassword> `
    
    5. run kafka producer and consumer
    
