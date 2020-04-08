@@ -23,9 +23,7 @@ Kafka documentations
   
    1. clone or download the repo
    
-   2. install Kafka and Zookeeper
-   
-   3. start Zookeeper and Kafka server (inside the kafka root directory)
+   2. start Zookeeper and Kafka server in the kafka root folder (kafka/kafka_2.11-1.0.0)
    
       `bin/zookeeper-server-start.sh config/zookeeper.properties`
       
@@ -40,11 +38,11 @@ Kafka documentations
       `bin/kafka-server-start.sh -daemon config/server.properties`
       
       
-   4. establish connection to the MongoAtlas Database
+   3. establish connection to the MongoAtlas Database
    
-   4-1. create cred.py in the kafka root folder and populate with `username:<MongoDBusername> password=<MongoDBpassword> `
+   3-1. create cred.py in the kafka root folder and populate with `username:<MongoDBusername> password=<MongoDBpassword> `
    
-   5. run kafka producer and consumer
+   4. run kafka producer and consumer
    
        `python producer.py`
        
