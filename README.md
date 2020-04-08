@@ -48,10 +48,12 @@ Kafka documentations
    1. create RapidAPI username and password https://rapidapi.com/
    
    1-2. Create constants.js in the api root folder and populate with
+   
    	`module.exports = Object.freeze({
 	    username: <rapidAPI username>,
 	    password: <rapidAPI password>
 	});`
+	
    
    2. run `npm install`
    
@@ -60,10 +62,14 @@ Kafka documentations
    3. run `npm start`
    
    4. test endpoints cityCovid and stateCovid
+   
    `http://localhost:3120/cityCovid/?city={city}&state={state}`
-   	-returns _id, city, province, country, lastUpdated, keyId, confirmed, deaths, and recovered.
+   
+   -returns _id, city, province, country, lastUpdated, keyId, confirmed, deaths, and recovered.
+	
 	
    ex. go to postman and try get `http://localhost:3120/cityCovid/?city=Denver&state=Colorado`
+   
 	`{
 	    "_id": "5e7d495e865bf2d33157dd20",
 	    "city": "Denver",
@@ -75,17 +81,22 @@ Kafka documentations
 	    "deaths": 3,
 	    "recovered": 0
 	}`
+	
    
    `http://localhost:3120/stateCovid`
-   	-returns province, confirmed, deaths, and recovered grouped by state.
+   
+   -returns province, confirmed, deaths, and recovered grouped by state.
+	
 	
    ex. go to postman and try get `http://localhost:3120/cityCovid/?city=Denver&state=Colorado`
+   
 	`{
 	   "_id": "Colorado",
 	   "confirmed": 2207,
 	   "deaths": 46,
 	   "recovered": 0,
 	}`
+	
 	
 	
    ### Run Frontend
