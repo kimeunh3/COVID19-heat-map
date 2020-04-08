@@ -44,7 +44,7 @@ app.get('/stateCovid', requestHandler(async (req) => {
 		    {
 		        "$group": {
 		            "_id": "$province",
-		            "confirmed": { $sum: "$confimed" },
+		            "confirmed": { $sum: "$confirmed" },
 			        "deaths": { $sum: "$deaths" },
 			        "recovered": { $sum: "$recovered" }
 		        }
