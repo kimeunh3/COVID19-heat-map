@@ -1,7 +1,61 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import img from "./Blank_US_Map.svg";
+import { ReactComponent as ReactMap } from "./Blank_US_Map.svg";
+import $ from "jquery";
+
+const state_caps = {
+  AL: "Alabama",
+  AK: "Alaska",
+  AZ: "Arizona",
+  AR: "Arkansas",
+  CA: "California",
+  CO: "Colorado",
+  CT: "Connecticut",
+  DE: "Deleware",
+  FL: "Florida",
+  GA: "Georgia",
+  HI: "Hawaii",
+  ID: "Idaho",
+  IL: "Illinois",
+  IN: "Indiana",
+  IA: "Iowa",
+  KS: "Kansas",
+  KY: "Kentucky",
+  LA: "Louisiana",
+  ME: "Maine",
+  MD: "Maryland",
+  MA: "Massachusetts",
+  MI: "Michigan",
+  MN: "Minnesota",
+  MS: "Mississippi",
+  MO: "Missouri",
+  MT: "Montana",
+  NE: "Nebraska",
+  NV: "Nevada",
+  NH: "New Hampshire",
+  NJ: "New Jersey",
+  NM: "New Mexico",
+  NY: "New York",
+  NC: "North Carolina",
+  ND: "North Dakota",
+  OH: "Ohio",
+  OK: "Oklahoma",
+  OR: "Oregon",
+  PA: "Pennsylvania",
+  RI: "Rhode Island",
+  SC: "South Carolina",
+  SD: "South Dakota",
+  TN: "Tennessee",
+  TX: "Texas",
+  UT: "Utah",
+  VT: "Vermont",
+  VA: "Virginia",
+  WA: "Washington",
+  WV: "West Virginia",
+  WI: "Wisconsin",
+  WY: "Wyoming",
+};
 
 class Test extends React.Component {
   constructor(props) {
@@ -11,49 +65,69 @@ class Test extends React.Component {
       isLoading: true,
       stats: [],
       location: "",
-      countyStats: null
+      countyStats: null,
     };
   }
 
-  async componentDidMount(){
-    try{
-      await fetch('/stateCovid').then(response => 
-          response.json().then(data => ({
-              data: data,
-              status: response.status,
+  async componentDidMount() {
+    $(".map-img #MI").css("fill", "red");
+    try {
+      await fetch("/stateCovid").then((response) =>
+        response
+          .json()
+          .then((data) => ({
+            data: data,
+            status: response.status,
+          }))
+          .then((res) => {
+            this.setState({ stats: res.data, isLoading: false });
+            //console.log(this.state.stats);
           })
-      ).then(res => {
-          this.setState({ stats: res.data,
-                          isLoading: false})
-          console.log(this.state.stats)
-    }));
-    }catch (e) {
+      );
+    } catch (e) {
       alert(e);
+    }
+    for (let i = 0; i < this.state.stats.length; i++) {
+      console.log(this.state.stats[i]._id);
+      let key = Object.keys(state_caps).find(
+        (key) => state_caps[key] === this.state.stats[i]._id
+      );
+      if (key) {
+        this.state.stats[i]._id = key;
+        console.log(this.state.stats[i]._id);
+      }
+      if (this.state.stats[i].confirmed > 10000) {
+        $(".map-img #" + key).css("fill", "red");
+      }
+      //this.state.stats[i]._id =
     }
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     console.log("location: ", this.state.location);
     this.setState({
-      location: event.target.value
+      location: event.target.value,
     });
-  }
+  };
 
   async handleClick() {
     let city = this.state.location.split(" ")[0];
     let state = this.state.location.split(" ")[1];
 
-    try{
-      await fetch(`/cityCovid?city=${city}&state=${state}`).then(response => 
-          response.json().then(data => ({
-              data: data,
-              status: response.status,
+    try {
+      await fetch(`/cityCovid?city=${city}&state=${state}`).then((response) =>
+        response
+          .json()
+          .then((data) => ({
+            data: data,
+            status: response.status,
+          }))
+          .then((res) => {
+            this.setState({ countyStats: res.data });
+            //console.log(this.state.countyStats)
           })
-      ).then(res => {
-          this.setState({ countyStats: res.data})
-          console.log(this.state.countyStats)
-    }));
-    }catch (e) {
+      );
+    } catch (e) {
       alert(e);
     }
   }
@@ -65,17 +139,30 @@ class Test extends React.Component {
           <h1 className="title">US COVID19 Stats</h1>
           <div className="search-box">
             <form>
-              <input type="location" name = "location" value = {this.state.location} placeholder="place" onChange={this.handleChange}/>
+              <input
+                type="location"
+                name="location"
+                value={this.state.location}
+                placeholder="place"
+                onChange={this.handleChange}
+              />
             </form>
-            //이거 css 부탁행
-            <button onClick={() => {this.handleClick()}}>
+            <button
+              onClick={() => {
+                this.handleClick();
+              }}
+            >
               Enter
             </button>
           </div>
         </div>
         <div className="map">
-          {this.state.isLoading === true ? 'error' : <img src={img} />}
-          {this.state.stats.map(el => (
+          {this.props.isLoading === true ? (
+            "error"
+          ) : (
+            <ReactMap className="map-img" alt="map" />
+          )}
+          {this.state.stats.map((el) => (
             <li key={el._id}>
               {el._id}: {el.confirmed}, {el.deaths}, {el.recovered}
             </li>

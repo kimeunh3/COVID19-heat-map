@@ -11,6 +11,12 @@ div.header > div {
   position: absolute;
   top: 25px;
 }
+form {
+  display: inline-block;
+}
+button {
+  display: inline-block;
+}
 .map {
   text-align: center;
 }
