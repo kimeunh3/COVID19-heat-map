@@ -25,7 +25,7 @@ class Test extends React.Component {
       ).then(res => {
           this.setState({ stats: res.data,
                           isLoading: false})
-          //console.log(this.state.stats)
+          console.log(this.state.stats)
     }));
     }catch (e) {
       alert(e);
@@ -33,6 +33,7 @@ class Test extends React.Component {
   }
 
   handleChange = event => {
+    console.log("location: ", this.state.location);
     this.setState({
       location: event.target.value
     });
@@ -50,7 +51,7 @@ class Test extends React.Component {
           })
       ).then(res => {
           this.setState({ countyStats: res.data})
-          //console.log(this.state.countyStats)
+          console.log(this.state.countyStats)
     }));
     }catch (e) {
       alert(e);
@@ -73,7 +74,7 @@ class Test extends React.Component {
           </div>
         </div>
         <div className="map">
-          {this.props.isLoading === true ? 'error' : <img src={img} />}
+          {this.state.isLoading === true ? 'error' : <img src={img} />}
           {this.state.stats.map(el => (
             <li key={el._id}>
               {el._id}: {el.confirmed}, {el.deaths}, {el.recovered}
