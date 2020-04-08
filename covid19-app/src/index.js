@@ -64,9 +64,27 @@ class Test extends React.Component {
     this.state = {
       isLoading: true,
       stats: [],
+      usStats: [],
       location: "",
       countyStats: null,
     };
+
+   try {
+      fetch("/usCovid").then((response) =>
+        response
+          .json()
+          .then((data) => ({
+            data: data,
+            status: response.status,
+          }))
+          .then((res) => {
+            this.setState({ usStats: res.data});
+            console.log("US: ", this.state.usStats);
+          })
+      );
+    } catch (e) {
+      alert(e);
+    }
   }
 
   async componentDidMount() {
@@ -88,13 +106,13 @@ class Test extends React.Component {
       alert(e);
     }
     for (let i = 0; i < this.state.stats.length; i++) {
-      console.log(this.state.stats[i]._id);
+      //console.log(this.state.stats[i]._id);
       let key = Object.keys(state_caps).find(
         (key) => state_caps[key] === this.state.stats[i]._id
       );
       if (key) {
         this.state.stats[i]._id = key;
-        console.log(this.state.stats[i]._id);
+        //console.log(this.state.stats[i]._id);
       }
       if (this.state.stats[i].confirmed > 10000) {
         $(".map-img #" + key).css("fill", "red");
@@ -104,7 +122,7 @@ class Test extends React.Component {
   }
 
   handleChange = (event) => {
-    console.log("location: ", this.state.location);
+    //console.log("location: ", this.state.location);
     this.setState({
       location: event.target.value,
     });
@@ -162,11 +180,6 @@ class Test extends React.Component {
           ) : (
             <ReactMap className="map-img" alt="map" />
           )}
-          {this.state.stats.map((el) => (
-            <li key={el._id}>
-              {el._id}: {el.confirmed}, {el.deaths}, {el.recovered}
-            </li>
-          ))}
         </div>
         <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">
