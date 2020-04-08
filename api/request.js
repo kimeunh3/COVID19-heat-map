@@ -58,5 +58,32 @@ app.get('/stateCovid', requestHandler(async (req) => {
 	}); 
 }));
 
+app.get('/usCovid', requestHandler(async (req) => {
+
+	return new Promise(function(resolve, reject) {
+	    MongoClient.connect(CONNECTION_URL, function (err, client) {
+		  	if (err) throw err;
+		  	var db = client.db(Data);
+
+		  	ret = db.collection('data').aggregate([    
+		    {
+		        "$group": {
+		            "_id": "$country",
+		            "confirmed": { $sum: "$confirmed" },
+			        "deaths": { $sum: "$deaths" },
+			        "recovered": { $sum: "$recovered" }
+		        }
+		    }
+			]).toArray(function(err, result){
+				if (err) throw reject(err);
+	          	resolve(result);
+			});
+			client.close();
+		});
+	}); 
+
+}));
+
+
 
 module.exports = app;
