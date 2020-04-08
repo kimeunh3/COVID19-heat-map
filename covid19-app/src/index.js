@@ -10,12 +10,12 @@ class Test extends React.Component {
     this.state = {
       isLoading: true,
       stats: [],
-      location: this.props.value
+      location: "",
+      countyStats: null
     };
   }
 
   async componentDidMount(){
-    //  TO DO: solve backend
     try{
       await fetch('/stateCovid').then(response => 
           response.json().then(data => ({
@@ -25,26 +25,33 @@ class Test extends React.Component {
       ).then(res => {
           this.setState({ stats: res.data,
                           isLoading: false})
-          console.log(res)
+          //console.log(this.state.stats)
     }));
     }catch (e) {
       alert(e);
     }
-
-    {this.isLoading == false ? console.log(this.state.stats) : console.log('waiting')}
   }
 
-  handleChangeValue(value){
-    this.setState({selectedValue: value});
+  handleChange = event => {
+    this.setState({
+      location: event.target.value
+    });
   }
 
-  handleClick() {
-    //  TO DO: connect backend
+  async handleClick() {
     let city = this.state.location.split(" ")[0];
     let state = this.state.location.split(" ")[1];
+
     try{
-      fetch(`/cityCovid?city=${city}?state=${state}`)
-        .then(({ results }) => this.setState({ stats: results })); //need to pass data to new page
+      await fetch(`/cityCovid?city=${city}&state=${state}`).then(response => 
+          response.json().then(data => ({
+              data: data,
+              status: response.status,
+          })
+      ).then(res => {
+          this.setState({ countyStats: res.data})
+          //console.log(this.state.countyStats)
+    }));
     }catch (e) {
       alert(e);
     }
@@ -57,10 +64,10 @@ class Test extends React.Component {
           <h1 className="title">US COVID19 Stats</h1>
           <div className="search-box">
             <form>
-              <input type="text" name = "location" value = {this.state.location} placeholder="place" onChange={() => {this.handleChangeValue(this.state.location);}}/>
+              <input type="location" name = "location" value = {this.state.location} placeholder="place" onChange={this.handleChange}/>
             </form>
             //이거 css 부탁행
-            <button onClick={this.handleClick}>
+            <button onClick={() => {this.handleClick()}}>
               Enter
             </button>
           </div>
@@ -68,7 +75,7 @@ class Test extends React.Component {
         <div className="map">
           {this.props.isLoading === true ? 'error' : <img src={img} />}
           {this.state.stats.map(el => (
-            <li>
+            <li key={el._id}>
               {el._id}: {el.confirmed}, {el.deaths}, {el.recovered}
             </li>
           ))}
