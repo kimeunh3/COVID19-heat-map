@@ -25,13 +25,15 @@ Kafka documentations
    
    2. install Kafka and Zookeeper
    
-   3. start Zookeeper and Kafka server
+   3. start Zookeeper and Kafka server (inside the kafka root directory)
    
       `bin/zookeeper-server-start.sh config/zookeeper.properties`
       
       `bin/kafka-server-start.sh config/server.properties`
       
    4. establish connection to the MongoAtlas Database
+   
+   	4-1. create cred.py and in the kafka root folder and populate with username:<MongoDBusername> password=<MongoDBpassword> 
    
    5. run kafka producer and consumer
    
@@ -41,20 +43,56 @@ Kafka documentations
        
        
        
-   ### Create Backend
+   ### Run Backend
    
+   1. create RapidAPI username and password https://rapidapi.com/
+   
+   1-2. Create constants.js in the api root folder and populate with
+   	`module.exports = Object.freeze({
+	    username: <rapidAPI username>,
+	    password: <rapidAPI password>
+	});`
+   
+   2. run `npm install`
+   
+   2-1. If Error: Cannot find module 'express', try `npm install express`
+   
+   3. run `npm start`
+   
+   4. test endpoints cityCovid and stateCovid
+   `http://localhost:3120/cityCovid/?city={city}&state={state}`
+   	-returns _id, city, province, country, lastUpdated, keyId, confirmed, deaths, and recovered.
+	
+   ex. go to postman and try get `http://localhost:3120/cityCovid/?city=Denver&state=Colorado`
+	`{
+	    "_id": "5e7d495e865bf2d33157dd20",
+	    "city": "Denver",
+	    "province": "Colorado",
+	    "country": "US",
+	    "lastUpdate": "2020-03-25 23:33:19",
+	    "keyId": "Denver, Colorado, US",
+	    "confirmed": 214,
+	    "deaths": 3,
+	    "recovered": 0
+	}`
+   
+   `http://localhost:3120/stateCovid`
+   	-returns province, confirmed, deaths, and recovered grouped by state.
+	
+   ex. go to postman and try get `http://localhost:3120/cityCovid/?city=Denver&state=Colorado`
+	`{
+	   "_id": "Colorado",
+	   "confirmed": 2207,
+	   "deaths": 46,
+	   "recovered": 0,
+	}`
+	
+	
+   ### Run Frontend
+
    1. run `npm install`
-   
-   1-2. If Error: Cannot find module 'express', try `npm install express`
    
    2. run `npm start`
    
-   3. test endpoints ex. http://localhost:3120/cityCovid/?city=<city>&state=<state>
-	
-	
-	
-   ### Create Frontend
-
-
 
   
