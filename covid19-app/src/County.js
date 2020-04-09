@@ -1,69 +1,93 @@
 import React from "react";
-import ReactDOM from "react-dom";
+//import ReactDOM from "react-dom";
 import "./Home.css";
-import img from "./Blank_US_Map.svg";
+import { Link } from "react-router-dom"; 
+
+
+          //{일단은 이런 그런 느낌적인 느낌 수정 시급....}
+          
+//  TO DO: Redirect to a different county page from county x working. The url is updated but doesn't redirect.
+//  TO DO: css and graphs on the bottom. compare to the national average. 
+//  TO DO: error handling when user input doesn't follow the correct format. <city>, <state>
+//  TO DO: might be nice to have a logo or something that redirects to the main page
 
 class County extends React.Component {
-  /*constructor(props) {
+  constructor(props) {
     super(props);
+    let search = window.location.search;
+    let param = search.toString().split("=")[1]
 
     this.state = {
       isLoading: true,
-      stats: [],
+      city: param.split(",%20")[0],
+      state: param.split("%20")[1],
       location: "",
-      countyStats: null
-    };
+      countyStat: null,
   }
+
+  //console.log(this.state.city)
+  //console.log(this.state.state)
+}
 
   async componentDidMount(){
     try{
-      await fetch('/stateCovid').then(response => 
+      await fetch(`/cityCovid?city=${this.state.city}&state=${this.state.state}`).then(response => 
           response.json().then(data => ({
               data: data,
               status: response.status,
           })
       ).then(res => {
-          this.setState({ stats: res.data,
+          this.setState({ countyStat: res.data,
                           isLoading: false})
-          //console.log(this.state.stats)
+          //console.log(this.state.countyStat)
     }));
     }catch (e) {
+      this.setState({found: false})
       alert(e);
     }
   }
 
   handleChange = event => {
-    console.log("location: ", this.state.location);
+    //console.log("location: ", this.state.location);
     this.setState({
       location: event.target.value
     });
   }
 
-  async handleClick() {
-    let city = this.state.location.split(" ")[0];
-    let state = this.state.location.split(" ")[1];
-
-    try{
-      await fetch(`/cityCovid?city=${city}&state=${state}`).then(response => 
-          response.json().then(data => ({
-              data: data,
-              status: response.status,
-          })
-      ).then(res => {
-          this.setState({ countyStats: res.data})
-          console.log(this.state.countyStats)
-    }));
-    }catch (e) {
-      alert(e);
-    }
-  }*/
+  renderCountyStats(){
+    return (
+      <div className="centerStats">
+        <div className="stats">confirmed:  {this.state.countyStat.confirmed}</div>
+        <div className="stats">deaths:  {this.state.countyStat.deaths}</div>
+        <div className="stats">recovered:  {this.state.countyStat.recovered}</div>
+        <div className="stats">last updated:  {this.state.countyStat.lastUpdate}</div>
+      </div>
+      )
+  }
 
   render() {
     return (
       <div>
         <div className="header">
-          <h1 className="title">County, State COVID19 Stats</h1>
-          일단은 이런 그런 느낌적인 느낌 수정 시금....
+           <h1 className="title">{this.state.city.toUpperCase()}, {this.state.state.toUpperCase()} COVID19 Stats</h1>
+          <div className="search-box">
+            <form>
+              <input
+                type="location"
+                name="location"
+                value={this.state.location}
+                placeholder="city, state"
+                onChange={this.handleChange}
+              />
+            </form>
+            <Link to={`/county?id=${this.state.location}`}>Enter</Link> 
+          </div>
+          <div className="main"><Link to={`/`}>To Main</Link> </div>
+        </div>
+          <div>
+          {this.state.isLoading === false ? this.renderCountyStats() : "Loading"}
+          </div>
+        <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">
             {" "}
             Link to CDC{" "}

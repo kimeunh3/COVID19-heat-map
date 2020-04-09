@@ -1,9 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom";
+//import {ReactDOM} from "react-dom";
 import "./Home.css";
 import { ReactComponent as ReactMap } from "./Blank_US_Map.svg";
 import $ from "jquery";
-import { Link } from "react-router-dom"; 
+import { Link, Route } from "react-router-dom"; 
+//import { Button } from 'react-bootstrap';
+
+//  TO DO: link map to state page (with param state as id)
+//  TO DO: maybe a better css? 
 
 const state_caps = {
   AL: "Alabama",
@@ -68,7 +72,7 @@ class Home extends React.Component {
       stats: [],
       usStats: [],
       location: "",
-      countyStats: null,
+      state: "",
     };
 
    try {
@@ -81,7 +85,7 @@ class Home extends React.Component {
           }))
           .then((res) => {
             this.setState({ usStats: res.data, usStatsLoading: false});
-            console.log("US: ", this.state.usStats[0]);
+            //console.log("US: ", this.state.usStats[0]);
           })
       );
     } catch (e) {
@@ -92,7 +96,7 @@ class Home extends React.Component {
   async componentDidMount() {
     $(".map-img #MI").css("fill", "red");
     try {
-      await fetch("/stateCovid").then((response) =>
+      await fetch("/allStateCovid").then((response) =>
         response
           .json()
           .then((data) => ({
@@ -130,26 +134,10 @@ class Home extends React.Component {
     });
   };
 
-  async handleClick() {
-    let city = this.state.location.split(" ")[0];
-    let state = this.state.location.split(" ")[1];
-
-    try {
-      await fetch(`/cityCovid?city=${city}&state=${state}`).then((response) =>
-        response
-          .json()
-          .then((data) => ({
-            data: data,
-            status: response.status,
-          }))
-          .then((res) => {
-            this.setState({ countyStats: res.data });
-            //console.log(this.state.countyStats)
-          })
-      );
-    } catch (e) {
-      alert(e);
-    }
+  updateState(value){
+    this.setState({
+      state: value,
+    })
   }
 
   renderUsStats(){
@@ -158,6 +146,7 @@ class Home extends React.Component {
         <div className="stats">confirmed:  {this.state.usStats[0].confirmed}</div>
         <div className="stats">deaths:  {this.state.usStats[0].deaths}</div>
         <div className="stats">recovered:  {this.state.usStats[0].recovered}</div>
+        <div className="stats">last updated:  {this.state.usStats[0].lastUpdate}</div>
       </div>
       )
   }
@@ -177,18 +166,10 @@ class Home extends React.Component {
                 onChange={this.handleChange}
               />
             </form>
-            <Link to="/county">
-            <button
-              onClick={() => {
-                this.handleClick();
-              }}
-            >
-              Enter
-            </button>
-            </Link>
+            <Link to={`/county?id=${this.state.location}`}>Enter</Link> 
           </div>
         </div>
-        <div>{this.state.usStatsLoading === false ? this.renderUsStats(): "helloWorld"}</div>
+        <div className="centerStats">{this.state.usStatsLoading === false ? this.renderUsStats(): "Loading..."}</div>
         <div className="map">
           {this.props.isLoading === true ? (
             "error"

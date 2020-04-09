@@ -1,11 +1,11 @@
 // import react router
 import React from 'react';
-import { render } from 'react-dom';
+//import { render } from 'react-dom';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  //Link
 } from "react-router-dom";
 
 import ReactDOM from "react-dom";

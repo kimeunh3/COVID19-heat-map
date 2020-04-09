@@ -33,4 +33,9 @@ button {
 .stats {
   padding: 3px;
 }
+.main{
+  position: absolute;
+  left: 150px;
+  width: 200px;
+}
 
