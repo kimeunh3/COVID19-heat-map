@@ -51,25 +51,6 @@ class State extends React.Component {
     });
   }
 
-  async handleClick() {
-    let county = this.state.location.split(" ")[0];
-    let state = this.state.location.split(" ")[1];
-
-    try{
-      await fetch(`/countyCovid?county=${county}&state=${state}`).then(response => 
-          response.json().then(data => ({
-              data: data,
-              status: response.status,
-          })
-      ).then(res => {
-          this.setState({ countyStats: res.data})
-          //console.log(this.state.countyStats)
-    }));
-    }catch (e) {
-      alert(e);
-    }
-  }
-
 renderStateStats(){
   //console.log(this.state.stateStat)
     return (
