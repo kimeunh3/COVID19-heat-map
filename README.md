@@ -68,9 +68,9 @@ Kafka documentations
    
    3. run `npm start`
    
-   4. test endpoints (cityCovid, allStateCovid, stateCovid, usCovid)
+   4. test endpoints (countyCovid, allStateCovid, stateCovid, usCovid)
 	
-   ex. go to Postman and try GET `http://localhost:3120/cityCovid/?city=Denver&state=Colorado`
+   ex. go to Postman and try GET `http://localhost:3120/countyCovid/?county=Denver&state=Colorado`
    
 	`{
 	    "_id": "5e7d495e865bf2d33157dd20",
