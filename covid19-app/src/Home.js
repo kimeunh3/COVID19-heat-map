@@ -11,10 +11,10 @@ import { Link, Route } from "react-router-dom";
 //  TO DO: maybe a better css? -Eunhye (Due 04/14)
 //  TO DO: legend for colors
 
-//  TO DO: pass objects to State.js and County.js -Ashley (Due 04/14)
+//  TO DO: pass objects to State.js and County.js -Ashley (Due 04/14) 
 
 //  TO DO: have to click enter -Eunhye
-//  TO DO: reload bug
+//  DONE: reload bug -Ashley (Due 04/14) 
 
 const state_caps = {
   AL: "Alabama",
@@ -118,7 +118,39 @@ class Home extends React.Component {
     } catch (e) {
       alert(e);
     }
+  }
 
+  handleChange = (event) => {
+    //console.log("location: ", this.state.location);
+    this.setState({
+      location: event.target.value,
+    });
+  };
+
+  updateState(value) {
+    this.setState({
+      state: value,
+    });
+  }
+
+  renderUsStats() {
+    return (
+      <div className="centerStats">
+        <div className="stats">
+          confirmed: {this.state.usStats[0].confirmed}
+        </div>
+        <div className="stats">deaths: {this.state.usStats[0].deaths}</div>
+        <div className="stats">
+          recovered: {this.state.usStats[0].recovered}
+        </div>
+        <div className="stats">
+          last updated: {this.state.usStats[0].lastUpdate}
+        </div>
+      </div>
+    );
+  }
+
+  renderUsMap() {
     let total_confirmed = this.state.usStats[0].confirmed;
     let total_death = this.state.usStats[0].deaths;
     let total_recovered = this.state.usStats[0].recovered;
@@ -161,39 +193,9 @@ class Home extends React.Component {
     }
   }
 
-  handleChange = (event) => {
-    //console.log("location: ", this.state.location);
-    this.setState({
-      location: event.target.value,
-    });
-  };
-
-  updateState(value) {
-    this.setState({
-      state: value,
-    });
-  }
-
-  renderUsStats() {
-    return (
-      <div className="centerStats">
-        <div className="stats">
-          confirmed: {this.state.usStats[0].confirmed}
-        </div>
-        <div className="stats">deaths: {this.state.usStats[0].deaths}</div>
-        <div className="stats">
-          recovered: {this.state.usStats[0].recovered}
-        </div>
-        <div className="stats">
-          last updated: {this.state.usStats[0].lastUpdate}
-        </div>
-      </div>
-    );
-  }
-
   render() {
     var confirmed_cases =
-      this.state.isLoading === false ? this.state.usStats[0].confirmed : 0;
+      this.state.usStatsLoading === false ? this.state.usStats[0].confirmed : 0;
     return (
       <div>
         <div className="header">
@@ -224,62 +226,63 @@ class Home extends React.Component {
           )}
           <div className="legend">
             <p>
-              <span class="dot" id="0_0025"></span>
-              <span class="range">
+              <span className="dot" id="0_0025"></span>
+              <span className="range">
                 1-
                 {Math.floor(confirmed_cases * 0.0025)}
               </span>
             </p>
             <p>
-              <span class="dot" id="0_00625"></span>
-              <span class="range">
+              <span className="dot" id="0_00625"></span>
+              <span className="range">
                 {Math.floor(confirmed_cases * 0.0025) + 1}-
                 {Math.floor(confirmed_cases * 0.00625)}{" "}
               </span>
             </p>
             <p>
-              <span class="dot" id="0_01875"></span>
-              <span class="range">
+              <span className="dot" id="0_01875"></span>
+              <span className="range">
                 {Math.floor(confirmed_cases * 0.00625) + 1}-
                 {Math.floor(confirmed_cases * 0.01875)}{" "}
               </span>
             </p>
             <p>
-              <span class="dot" id="0_025"></span>
-              <span class="range">
+              <span className="dot" id="0_025"></span>
+              <span className="range">
                 {Math.floor(confirmed_cases * 0.01875) + 1}-
                 {Math.floor(confirmed_cases * 0.025)}{" "}
               </span>
             </p>
             <p>
-              <span class="dot" id="0_0375"></span>
-              <span class="range">
+              <span className="dot" id="0_0375"></span>
+              <span className="range">
                 {Math.floor(confirmed_cases * 0.0025) + 1}-
                 {Math.floor(confirmed_cases * 0.0375)}
               </span>
             </p>
             <p>
-              <span class="dot" id="0_05"></span>
-              <span class="range">
+              <span className="dot" id="0_05"></span>
+              <span className="range">
                 {Math.floor(confirmed_cases * 0.0375) + 1}-
                 {Math.floor(confirmed_cases * 0.05)}
               </span>
             </p>
             <p>
-              <span class="dot" id="0_3"></span>
-              <span class="range">
+              <span className="dot" id="0_3"></span>
+              <span className="range">
                 {Math.floor(confirmed_cases * 0.05) + 1}-
                 {Math.floor(confirmed_cases * 0.3)}
               </span>
             </p>
             <p>
-              <span class="dot" id="last"></span>
-              <span class="range">
+              <span className="dot" id="last"></span>
+              <span className="range">
                 {Math.floor(confirmed_cases * 0.3) + 1}-
               </span>
             </p>
           </div>
         </div>
+        <div>{this.state.usStatsLoading === false ? this.renderUsMap() : console.log("Map is Loading")}</div>
         <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">
             {" "}
