@@ -184,6 +184,7 @@ class Home extends React.Component {
   }
 
   render() {
+    var confirmed_cases = this.state.isLoading === false ? this.state.usStats[0].confirmed : 0
     return (
       <div>
         <div className="header">
@@ -212,7 +213,16 @@ class Home extends React.Component {
           ) : (
             <ReactMap className="map-img" alt="map" />
           )}
-          <div className="legend">color</div>
+          <div className="legend">
+            <p><span class="dot"></span>1-{Math.floor(confirmed_cases*0.0025)}</p>
+            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.0025)+1}-{Math.floor(confirmed_cases*0.00625)} </p>
+            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.00625)+1}-{Math.floor(confirmed_cases*0.01875)} </p>
+            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.01875)+1}-{Math.floor(confirmed_cases*0.025)} </p>
+            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.0025)+1}-{Math.floor(confirmed_cases*0.0375)}</p>
+            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.0375)+1}-{Math.floor(confirmed_cases*0.05)}</p>
+            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.05)+1}-{Math.floor(confirmed_cases*0.3)}</p>
+            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.3)+1}-</p>
+          </div>
         </div>
         <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">
