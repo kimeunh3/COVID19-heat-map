@@ -52,11 +52,11 @@ class State extends React.Component {
   }
 
   async handleClick() {
-    let city = this.state.location.split(" ")[0];
+    let county = this.state.location.split(" ")[0];
     let state = this.state.location.split(" ")[1];
 
     try{
-      await fetch(`/cityCovid?city=${city}&state=${state}`).then(response => 
+      await fetch(`/countyCovid?county=${county}&state=${state}`).then(response => 
           response.json().then(data => ({
               data: data,
               status: response.status,
@@ -94,7 +94,7 @@ renderStateStats(){
                 type="location"
                 name="location"
                 value={this.state.location}
-                placeholder="city, state"
+                placeholder="county, state"
                 onChange={this.handleChange}
               />
             </form>

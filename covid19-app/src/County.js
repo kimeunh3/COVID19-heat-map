@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
           
 //  TO DO: Redirect to a different county page from county x working. The url is updated but doesn't redirect.
 //  TO DO: css and graphs on the bottom. compare to the national average. 
-//  TO DO: error handling when user input doesn't follow the correct format. <city>, <state>
+//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state>
 //  TO DO: might be nice to have a logo or something that redirects to the main page
 
 class County extends React.Component {
@@ -19,19 +19,19 @@ class County extends React.Component {
 
     this.state = {
       isLoading: true,
-      city: param.split(",%20")[0],
+      county: param.split(",%20")[0],
       state: param.split("%20")[1],
       location: "",
       countyStat: null,
   }
 
-  //console.log(this.state.city)
+  //console.log(this.state.county)
   //console.log(this.state.state)
 }
 
   async componentDidMount(){
     try{
-      await fetch(`/cityCovid?city=${this.state.city}&state=${this.state.state}`).then(response => 
+      await fetch(`/countyCovid?county=${this.state.county}&state=${this.state.state}`).then(response => 
           response.json().then(data => ({
               data: data,
               status: response.status,
@@ -69,14 +69,14 @@ class County extends React.Component {
     return (
       <div>
         <div className="header">
-           <h1 className="title">{this.state.city.toUpperCase()}, {this.state.state.toUpperCase()} COVID19 Stats</h1>
+           <h1 className="title">{this.state.county.toUpperCase()}, {this.state.state.toUpperCase()} COVID19 Stats</h1>
           <div className="search-box">
             <form>
               <input
                 type="location"
                 name="location"
                 value={this.state.location}
-                placeholder="city, state"
+                placeholder="county, state"
                 onChange={this.handleChange}
               />
             </form>

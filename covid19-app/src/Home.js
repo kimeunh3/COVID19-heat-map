@@ -162,7 +162,7 @@ class Home extends React.Component {
                 type="location"
                 name="location"
                 value={this.state.location}
-                placeholder="city, state"
+                placeholder="county, state"
                 onChange={this.handleChange}
               />
             </form>

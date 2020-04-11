@@ -11,17 +11,17 @@ const CONNECTION_URL = "mongodb+srv://"+username+":"+password+"@coviddata-ulfup.
 const Data = "covid19";
 
 
-app.get('/cityCovid', requestHandler(async (req) => {
-	const { city, state}  = req.query;
+app.get('/countyCovid', requestHandler(async (req) => {
+	const { county, state}  = req.query;
 
 	return new Promise(function(resolve, reject) {
 	    MongoClient.connect(CONNECTION_URL, async function (err, client) {
 			if (err) throw err;
 			var db = client.db(Data);
-			var regexCity = new RegExp(["^", city, "$"].join(""), "i");
+			var regexCounty = new RegExp(["^", county, "$"].join(""), "i");
 			var regexState = new RegExp(["^", state, "$"].join(""), "i");
 
-			let ret = db.collection('data').findOne({city: {'$regex': regexCity}, province: {'$regex': regexState}, country: "US"})
+			let ret = db.collection('data').findOne({county: {'$regex': regexCounty}, province: {'$regex': regexState}, country: "US"})
 	      	ret.then(function(result){
 	      		//console.log(result);
 	      		resolve(result);
