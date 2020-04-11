@@ -12,7 +12,7 @@ const state_caps = {
   CA: "California",
   CO: "Colorado",
   CT: "Connecticut",
-  DE: "Deleware",
+  DE: "Delaware",
   FL: "Florida",
   GA: "Georgia",
   HI: "Hawaii",
@@ -69,7 +69,7 @@ class Test extends React.Component {
       countyStats: null,
     };
 
-   try {
+    try {
       fetch("/usCovid").then((response) =>
         response
           .json()
@@ -78,7 +78,7 @@ class Test extends React.Component {
             status: response.status,
           }))
           .then((res) => {
-            this.setState({ usStats: res.data});
+            this.setState({ usStats: res.data });
             console.log("US: ", this.state.usStats);
           })
       );
@@ -88,7 +88,6 @@ class Test extends React.Component {
   }
 
   async componentDidMount() {
-    $(".map-img #MI").css("fill", "red");
     try {
       await fetch("/stateCovid").then((response) =>
         response
@@ -105,6 +104,9 @@ class Test extends React.Component {
     } catch (e) {
       alert(e);
     }
+    let total_confirmed = this.state.usStats[0].confirmed;
+    let total_death = this.state.usStats[0].deaths;
+    let total_recovered = this.state.usStats[0].recovered;
     for (let i = 0; i < this.state.stats.length; i++) {
       //console.log(this.state.stats[i]._id);
       let key = Object.keys(state_caps).find(
@@ -114,8 +116,23 @@ class Test extends React.Component {
         this.state.stats[i]._id = key;
         //console.log(this.state.stats[i]._id);
       }
-      if (this.state.stats[i].confirmed > 10000) {
-        $(".map-img #" + key).css("fill", "red");
+      let curr = this.state.stats[i].confirmed;
+      if (curr / total_confirmed < 0.0025) {
+        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.15)");
+      } else if (curr / total_confirmed < 0.00625) {
+        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.3)");
+      } else if (curr / total_confirmed < 0.01875) {
+        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.45)");
+      } else if (curr / total_confirmed < 0.025) {
+        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.6)");
+      } else if (curr / total_confirmed < 0.0375) {
+        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.75)");
+      } else if (curr / total_confirmed < 0.05) {
+        $(".map-img #" + key).css("fill", "rgba(230,0,0)");
+      } else if (curr / total_confirmed < 0.3) {
+        $(".map-img #" + key).css("fill", "rgba(180,0,0)");
+      } else {
+        $(".map-img #" + key).css("fill", "rgba(139,0,0)");
       }
       //this.state.stats[i]._id =
     }
