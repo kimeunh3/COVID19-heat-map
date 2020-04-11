@@ -134,20 +134,28 @@ class Home extends React.Component {
       let curr = this.state.stats[i].confirmed;
       if (curr / total_confirmed < 0.0025) {
         $(".map-img #" + key).css("fill", "rgba(255,0,0,0.15)");
+        $("#0_0025").css("background-color", "rgba(255,0,0,0.15)");
       } else if (curr / total_confirmed < 0.00625) {
         $(".map-img #" + key).css("fill", "rgba(255,0,0,0.3)");
+        $("#0_00625").css("background-color", "rgba(255,0,0,0.3)");
       } else if (curr / total_confirmed < 0.01875) {
         $(".map-img #" + key).css("fill", "rgba(255,0,0,0.45)");
+        $("#0_01875").css("background-color", "rgba(255,0,0,0.45)");
       } else if (curr / total_confirmed < 0.025) {
         $(".map-img #" + key).css("fill", "rgba(255,0,0,0.6)");
+        $("#0_025").css("background-color", "rgba(255,0,0,0.6)");
       } else if (curr / total_confirmed < 0.0375) {
         $(".map-img #" + key).css("fill", "rgba(255,0,0,0.75)");
+        $("#0_0375").css("background-color", "rgba(255,0,0,0.75)");
       } else if (curr / total_confirmed < 0.05) {
         $(".map-img #" + key).css("fill", "rgba(230,0,0)");
+        $("#0_05").css("background-color", "rgba(230,0,0)");
       } else if (curr / total_confirmed < 0.3) {
         $(".map-img #" + key).css("fill", "rgba(180,0,0)");
+        $("#0_3").css("background-color", "rgba(180,0,0)");
       } else {
         $(".map-img #" + key).css("fill", "rgba(139,0,0)");
+        $("#last").css("background-color", "rgba(139,0,0)");
       }
       //this.state.stats[i]._id =
     }
@@ -184,7 +192,8 @@ class Home extends React.Component {
   }
 
   render() {
-    var confirmed_cases = this.state.isLoading === false ? this.state.usStats[0].confirmed : 0
+    var confirmed_cases =
+      this.state.isLoading === false ? this.state.usStats[0].confirmed : 0;
     return (
       <div>
         <div className="header">
@@ -214,14 +223,61 @@ class Home extends React.Component {
             <ReactMap className="map-img" alt="map" />
           )}
           <div className="legend">
-            <p><span class="dot"></span>1-{Math.floor(confirmed_cases*0.0025)}</p>
-            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.0025)+1}-{Math.floor(confirmed_cases*0.00625)} </p>
-            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.00625)+1}-{Math.floor(confirmed_cases*0.01875)} </p>
-            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.01875)+1}-{Math.floor(confirmed_cases*0.025)} </p>
-            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.0025)+1}-{Math.floor(confirmed_cases*0.0375)}</p>
-            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.0375)+1}-{Math.floor(confirmed_cases*0.05)}</p>
-            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.05)+1}-{Math.floor(confirmed_cases*0.3)}</p>
-            <p><span class="dot"></span>{Math.floor(confirmed_cases*0.3)+1}-</p>
+            <p>
+              <span class="dot" id="0_0025"></span>
+              <span class="range">
+                1-
+                {Math.floor(confirmed_cases * 0.0025)}
+              </span>
+            </p>
+            <p>
+              <span class="dot" id="0_00625"></span>
+              <span class="range">
+                {Math.floor(confirmed_cases * 0.0025) + 1}-
+                {Math.floor(confirmed_cases * 0.00625)}{" "}
+              </span>
+            </p>
+            <p>
+              <span class="dot" id="0_01875"></span>
+              <span class="range">
+                {Math.floor(confirmed_cases * 0.00625) + 1}-
+                {Math.floor(confirmed_cases * 0.01875)}{" "}
+              </span>
+            </p>
+            <p>
+              <span class="dot" id="0_025"></span>
+              <span class="range">
+                {Math.floor(confirmed_cases * 0.01875) + 1}-
+                {Math.floor(confirmed_cases * 0.025)}{" "}
+              </span>
+            </p>
+            <p>
+              <span class="dot" id="0_0375"></span>
+              <span class="range">
+                {Math.floor(confirmed_cases * 0.0025) + 1}-
+                {Math.floor(confirmed_cases * 0.0375)}
+              </span>
+            </p>
+            <p>
+              <span class="dot" id="0_05"></span>
+              <span class="range">
+                {Math.floor(confirmed_cases * 0.0375) + 1}-
+                {Math.floor(confirmed_cases * 0.05)}
+              </span>
+            </p>
+            <p>
+              <span class="dot" id="0_3"></span>
+              <span class="range">
+                {Math.floor(confirmed_cases * 0.05) + 1}-
+                {Math.floor(confirmed_cases * 0.3)}
+              </span>
+            </p>
+            <p>
+              <span class="dot" id="last"></span>
+              <span class="range">
+                {Math.floor(confirmed_cases * 0.3) + 1}-
+              </span>
+            </p>
           </div>
         </div>
         <div className="link">

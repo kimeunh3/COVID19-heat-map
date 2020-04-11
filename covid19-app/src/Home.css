@@ -1,3 +1,8 @@
+#root {
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
 .header {
   text-align: center;
   position: relative;
@@ -18,9 +23,7 @@ button {
   display: inline-block;
 }
 .map {
-  max-width: 1000px;
-  margin: 0 auto;
-  position: relative;
+  text-align: center;
 }
 .link {
   text-align: center;
@@ -44,15 +47,24 @@ button {
   box-shadow: 0 5px 10px rgba(0, 22, 39, 0.3);
   border: 1px solid rgba(0, 0, 0, 0.2);
   display: inline-block;
-  position: absolute;
-  top: 400px;
-  padding: 20px 20px;
-  width: 250px;
+  padding: 20px 30px;
+  width: 180px;
+  text-align: left;
 }
-.dot {
+.legend > p {
+  position: relative;
+  margin: 10px 0;
+  line-height: 15px;
+}
+span.dot {
   height: 25px;
   width: 25px;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
+  margin-right: 15px;
+}
+span.range {
+  position: absolute;
+  top: 5px;
 }
