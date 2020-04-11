@@ -6,8 +6,15 @@ import $ from "jquery";
 import { Link, Route } from "react-router-dom";
 //import { Button } from 'react-bootstrap';
 
-//  TO DO: link map to state page (with param state as id)
-//  TO DO: maybe a better css?
+//  TO DO: link map to state page (with param state as id) -Eunhye (Due 04/14)c<Link to={`/state?id=${스테이트 이름}`}></Link>
+//  TO DO: drop down menu ish for search bar -Eunhye (Due 04/14)
+//  TO DO: maybe a better css? -Eunhye (Due 04/14)
+
+//  TO DO: pass objects to State.js and County.js -Ashley (Due 04/14)
+
+
+//  TO DO: have to click enter -Eunhye
+//  TO DO: DC bug
 
 const state_caps = {
   AL: "Alabama",
@@ -17,7 +24,7 @@ const state_caps = {
   CA: "California",
   CO: "Colorado",
   CT: "Connecticut",
-  DC2: "District of Columbia",
+  //DC2: "District of Columbia",
   DE: "Delaware",
   FL: "Florida",
   GA: "Georgia",
@@ -105,7 +112,7 @@ class Home extends React.Component {
           }))
           .then((res) => {
             this.setState({ stats: res.data, isLoading: false });
-            console.log(this.state.stats);
+            //console.log(this.state.stats);
           })
       );
     } catch (e) {

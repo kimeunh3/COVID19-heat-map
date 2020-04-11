@@ -5,8 +5,13 @@ import { Link } from "react-router-dom";
 
 // 일단은 이런 그런 느낌적인 느낌 수정 시금....
 
-//  TO DO: css and graphs on the bottom. compare to the national average. 
-//  TO DO: might be nice to have a logo or something that redirects to the main page
+//  TO DO: css and graphs on the bottom. compare to the national average. //Backend-Ash (Due 04/14)
+//Frontend(display) Eunhye
+
+//  TO DO: might be nice to have a logo or something that redirects to the main page //Eunhye (Due 04/14)
+
+
+//  TO DO: might be nice to have a logo or something that redirects to the main page -Eunhye
 
 class State extends React.Component {
   constructor(props) {

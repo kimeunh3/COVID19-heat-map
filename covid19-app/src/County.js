@@ -6,10 +6,15 @@ import { Link } from "react-router-dom";
 
           //{일단은 이런 그런 느낌적인 느낌 수정 시급....}
           
-//  TO DO: Redirect to a different county page from county x working. The url is updated but doesn't redirect.
-//  TO DO: css and graphs on the bottom. compare to the national average. 
-//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state>
-//  TO DO: might be nice to have a logo or something that redirects to the main page
+//  TO DO: Redirect to a different county page from county x working. The url is updated but doesn't redirect. //Ashley 
+//  TO DO: css and graphs on the bottom. compare to the national average. //Eunhye
+//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent //Eunhye
+
+
+//  TO DO: might be nice to have a logo or something that redirects to the main page //Eunhye (Due 04/14)
+
+
+//  TO DO: parsing //Ashley (Due 04/14)
 
 class County extends React.Component {
   constructor(props) {
