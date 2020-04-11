@@ -9,10 +9,9 @@ import { Link, Route } from "react-router-dom";
 //  TO DO: link map to state page (with param state as id) -Eunhye (Due 04/14)c<Link to={`/state?id=${스테이트 이름}`}></Link>
 //  TO DO: drop down menu ish for search bar -Eunhye (Due 04/14)
 //  TO DO: maybe a better css? -Eunhye (Due 04/14)
-//  TO DO: legend for colors 
+//  TO DO: legend for colors
 
 //  TO DO: pass objects to State.js and County.js -Ashley (Due 04/14)
-
 
 //  TO DO: have to click enter -Eunhye
 //  TO DO: reload bug
@@ -213,8 +212,8 @@ class Home extends React.Component {
           ) : (
             <ReactMap className="map-img" alt="map" />
           )}
+          <div className="legend">color</div>
         </div>
-        <div className="legend">color </div>
         <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">
             {" "}
