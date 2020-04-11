@@ -40,7 +40,7 @@ Kafka documentations
       
    3. establish connection to the MongoAtlas Database
    
-   3-1. create cred.py in the kafka root folder and populate with `username:<MongoDBusername> password=<MongoDBpassword> `
+   3-1. create cred.py in the kafka root folder and populate with `username=<MongoDBusername> password=<MongoDBpassword> `
    
    4. run kafka producer and consumer
    
@@ -68,9 +68,9 @@ Kafka documentations
    
    3. run `npm start`
    
-   4. test endpoints cityCovid and stateCovid
+   4. test endpoints (countyCovid, allStateCovid, stateCovid, usCovid)
 	
-   ex. go to postman and try GET `http://localhost:3120/cityCovid/?city=Denver&state=Colorado`
+   ex. go to Postman and try GET `http://localhost:3120/countyCovid/?county=Denver&state=Colorado`
    
 	`{
 	    "_id": "5e7d495e865bf2d33157dd20",
@@ -85,15 +85,42 @@ Kafka documentations
 	}`
 	
 	
-   ex. go to postman and try GET `http://localhost:3120/cityCovid/?city=Denver&state=Colorado`
+   ex. go to Postman and try GET `http://localhost:3120/allStateCovid`
+   
+	`[{
+	   "_id": "Colorado",
+	   "confirmed": 2207,
+	   "deaths": 46,
+	   "recovered": 0,
+	   "lastUpdate": "2020-03-25 23:33:19"
+	},
+	{"_id": "Michigan",
+	   "confirmed": 20093,
+	   "deaths": 866,
+	   "recovered": 0,
+	   "lastUpdate": "2020-03-25 23:33:19",
+	},
+	...]`
+	
+  ex. go to Postman and try GET `http://localhost:3120/stateCovid/?state=Colorado`
    
 	`{
 	   "_id": "Colorado",
 	   "confirmed": 2207,
 	   "deaths": 46,
 	   "recovered": 0,
+	   "lastUpdate": "2020-03-25 23:33:19"
 	}`
 	
+  ex. go to Postman and try GET `http://localhost:3120/usCovid`
+   
+	`{
+	   "_id": "US",
+	   "confirmed": 398260,
+	   "deaths": 12794,
+	   "recovered": 21763,
+	   "lastUpdate": "2020-03-25 23:33:19"
+	}`
 	
 	
    ### Run Frontend
