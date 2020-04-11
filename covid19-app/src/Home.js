@@ -9,12 +9,13 @@ import { Link, Route } from "react-router-dom";
 //  TO DO: link map to state page (with param state as id) -Eunhye (Due 04/14)c<Link to={`/state?id=${스테이트 이름}`}></Link>
 //  TO DO: drop down menu ish for search bar -Eunhye (Due 04/14)
 //  TO DO: maybe a better css? -Eunhye (Due 04/14)
+//  TO DO: legend for colors 
 
 //  TO DO: pass objects to State.js and County.js -Ashley (Due 04/14)
 
 
 //  TO DO: have to click enter -Eunhye
-//  TO DO: DC bug
+//  TO DO: reload bug
 
 const state_caps = {
   AL: "Alabama",
@@ -24,7 +25,7 @@ const state_caps = {
   CA: "California",
   CO: "Colorado",
   CT: "Connecticut",
-  //DC2: "District of Columbia",
+  DC2: "District of Columbia",
   DE: "Delaware",
   FL: "Florida",
   GA: "Georgia",
@@ -118,6 +119,7 @@ class Home extends React.Component {
     } catch (e) {
       alert(e);
     }
+
     let total_confirmed = this.state.usStats[0].confirmed;
     let total_death = this.state.usStats[0].deaths;
     let total_recovered = this.state.usStats[0].recovered;
@@ -212,6 +214,7 @@ class Home extends React.Component {
             <ReactMap className="map-img" alt="map" />
           )}
         </div>
+        <div className="legend">color </div>
         <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">
             {" "}
