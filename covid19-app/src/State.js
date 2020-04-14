@@ -18,7 +18,7 @@ class State extends React.Component {
     super(props);
 
     let search = window.location.search;
-    let param = search.toString().split("=")[1]
+    let param = search.toString().split("=")[1].replace(/%20/g, " ")
 
     this.state = {
       isLoading: true,

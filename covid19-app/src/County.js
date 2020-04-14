@@ -18,12 +18,12 @@ class County extends React.Component {
   constructor(props) {
     super(props);
     let search = window.location.search;
-    let param = search.toString().split("=")[1];
+    let param = search.toString().split("=")[1].replace(/%20/g, " ");
 
     this.state = {
       isLoading: true,
-      county: param.split(",%20")[0],
-      state: param.split("%20")[1],
+      county: param.split(", ")[0],
+      state: param.split(", ")[1],
       location: "",
       countyStat: null,
     };
