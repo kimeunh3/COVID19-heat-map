@@ -10,11 +10,11 @@
 }
 
 h1 {
-  width: 70%;
+  width: 100%;
   margin-right: 0;
 }
 
-div.header > div {
+.search-box {
   display: inline-block;
   position: absolute;
   top: 5px;
@@ -60,13 +60,14 @@ div.header > div {
 
 .search-button {
   text-decoration: none;
-  padding: 8px 10px;
+  padding: 6px 10px;
   background-color: #4c8bf5;
   border-radius: 5px;
   font-size: 14px;
   color: white;
   margin-left: 10px;
   position: absolute;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
 }
 
 button {
@@ -97,8 +98,20 @@ path:hover {
 }
 .main {
   position: absolute;
-  left: 150px;
-  width: 200px;
+  left: 30px;
+  top: 5px;
+  width: 20%;
+}
+.to-main {
+  text-decoration: none;
+  padding: 6px 10px;
+  background-color: #4c8bf5;
+  border-radius: 5px;
+  font-size: 14px;
+  color: white;
+  margin-left: 10px;
+  position: absolute;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
 }
 .legend {
   box-shadow: 0 5px 10px rgba(0, 22, 39, 0.3);

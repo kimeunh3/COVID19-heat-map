@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 
 //  Eunhye:
 //  DONE: link map to state page (with param state as id) -Eunhye (Due 04/14)c<Link to={`/state?id=${스테이트 이름}`}></Link>
-//  DONE drop down menu ish for search bar -Eunhye (Due 04/14)
-//  TO DO: maybe a better css? -Eunhye (Due 04/14)
+//  DONE: drop down menu ish for search bar -Eunhye (Due 04/14)
+//  DONE: maybe a better css? -Eunhye (Due 04/14)
 //  DONE: legend for colors-Eunhye (Due 04/14)
 
 //  Ash:
@@ -130,17 +130,12 @@ class Home extends React.Component {
 
   renderUsMap() {
     let total_confirmed = this.state.usStats[0].confirmed;
-    let total_death = this.state.usStats[0].deaths;
-    let total_recovered = this.state.usStats[0].recovered;
+    //let total_death = this.state.usStats[0].deaths;
+    //let total_recovered = this.state.usStats[0].recovered;
     for (let i = 0; i < this.state.stats.length; i++) {
-      //console.log(this.state.stats[i]._id);
       let key = Object.keys(state_caps).find(
         (key) => state_caps[key] === this.state.stats[i]._id
       );
-      // if (key) {
-      //   this.state.stats[i]._id = key;
-      //   //console.log(this.state.stats[i]._id);
-      // }
       let curr = this.state.stats[i].confirmed;
       if (curr / total_confirmed < 0.0025) {
         $(".map-img #" + key).css("fill", "rgba(255,0,0,0.15)");
