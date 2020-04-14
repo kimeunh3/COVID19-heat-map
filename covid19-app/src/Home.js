@@ -15,7 +15,6 @@ import { Link, Route } from "react-router-dom";
 
 //  TO DO: have to click enter -Eunhye
 //  TO DO: reload bug
-
 const state_caps = {
   AL: "Alabama",
   AK: "Alaska",
@@ -69,10 +68,13 @@ const state_caps = {
   WI: "Wisconsin",
   WY: "Wyoming",
 };
+const counties = ["Ingham, Michigan", "Boulder, Colorado"];
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
+
+    this.items = counties;
 
     this.state = {
       isLoading: true,
@@ -81,6 +83,7 @@ class Home extends React.Component {
       usStats: [],
       location: "",
       state: "",
+      suggestions: [],
     };
 
     try {
@@ -127,10 +130,10 @@ class Home extends React.Component {
       let key = Object.keys(state_caps).find(
         (key) => state_caps[key] === this.state.stats[i]._id
       );
-      if (key) {
-        this.state.stats[i]._id = key;
-        //console.log(this.state.stats[i]._id);
-      }
+      // if (key) {
+      //   this.state.stats[i]._id = key;
+      //   //console.log(this.state.stats[i]._id);
+      // }
       let curr = this.state.stats[i].confirmed;
       if (curr / total_confirmed < 0.0025) {
         $(".map-img #" + key).css("fill", "rgba(255,0,0,0.15)");
@@ -157,16 +160,42 @@ class Home extends React.Component {
         $(".map-img #" + key).css("fill", "rgba(139,0,0)");
         $("#last").css("background-color", "rgba(139,0,0)");
       }
-      //this.state.stats[i]._id =
+      $(".map-img #" + key).on("click", function () {
+        window.location.href = "/state?id=" + state_caps[key];
+      });
     }
   }
 
-  handleChange = (event) => {
-    //console.log("location: ", this.state.location);
-    this.setState({
-      location: event.target.value,
-    });
+  onTextChanged = (e) => {
+    const value = e.target.value;
+    let suggestions = [];
+    if (value.length > 0) {
+      const regex = new RegExp(`^${value}`, "i");
+      suggestions = this.items.sort().filter((v) => regex.test(v));
+    }
+    this.setState(() => ({ suggestions, location: value }));
   };
+
+  suggestionSelected(value) {
+    this.setState(() => ({
+      location: value,
+      suggestions: [],
+    }));
+  }
+
+  renderSuggestions() {
+    const { suggestions } = this.state;
+    if (suggestions.length === 0) {
+      return null;
+    }
+    return (
+      <ul>
+        {suggestions.map((item) => (
+          <li onClick={() => this.suggestionSelected(item)}>{item}</li>
+        ))}
+      </ul>
+    );
+  }
 
   updateState(value) {
     this.setState({
@@ -194,21 +223,30 @@ class Home extends React.Component {
   render() {
     var confirmed_cases =
       this.state.isLoading === false ? this.state.usStats[0].confirmed : 0;
+    const { location } = this.state;
     return (
       <div>
         <div className="header">
           <h1 className="title">US COVID19 Stats</h1>
           <div className="search-box">
-            <form>
+            <form className="autocomplete">
               <input
+                className="input-box"
                 type="location"
                 name="location"
-                value={this.state.location}
-                placeholder="county, state"
-                onChange={this.handleChange}
+                value={location}
+                placeholder="County, State"
+                onChange={this.onTextChanged}
+                autoComplete="off"
               />
+              {this.renderSuggestions()}
             </form>
-            <Link to={`/county?id=${this.state.location}`}>Enter</Link>
+            <Link
+              to={`/county?id=${this.state.location}`}
+              className="search-button"
+            >
+              Search
+            </Link>
           </div>
         </div>
         <div className="centerStats">
