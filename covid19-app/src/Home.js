@@ -6,7 +6,6 @@ import $ from "jquery";
 import { Link } from "react-router-dom";
 //import { Button } from 'react-bootstrap';
 
-
 //  Eunhye:
 //  DONE: link map to state page (with param state as id) -Eunhye (Due 04/14)c<Link to={`/state?id=${스테이트 이름}`}></Link>
 //  DONE drop down menu ish for search bar -Eunhye (Due 04/14)
