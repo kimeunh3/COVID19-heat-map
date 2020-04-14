@@ -1,14 +1,16 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "Home";
-import County from "County";
+import Home from "./Home.js"
+import County from "./County.js"
+import State from "./State.js"
 
-export default ({ childProps }) =>
-    <Switch>
-        <AppliedRoute path="/" exact component={Home} props={childProps} />
-        <AppliedRoute path="/county" exact component={County} props={childProps} />
-        <AppliedRoute path="/state" exact component={State} props={childProps} />
-    { /* Finally, catch all unmatched routes */}
-    <Route component={NotFound} />
-  </Switch>;
-
+<Router>
+      <div>
+        <Switch>
+          <Route path="/county" render={() => (<div>County</div>)} />
+          <Route path="/state" render={() => (<div>State</div>)} />
+          <Route exact path="/" render={() => (<div>Home</div>)} />
+          <Route component={NoMatch}/>
+        </Switch>
+     </div>
+  </Router>

@@ -3,15 +3,15 @@ import React from "react";
 import "./Home.css";
 import { Link } from "react-router-dom"; 
 
-// 일단은 이런 그런 느낌적인 느낌 수정 시금....
 
-//  TO DO: css and graphs on the bottom. compare to the national average. //Backend-Ash (Due 04/14)
-//Frontend(display) Eunhye
-
+//  Eunhye:
 //  TO DO: might be nice to have a logo or something that redirects to the main page //Eunhye (Due 04/14)
 
+//  TO DO: css and graphs on the bottom. compare to the national average. //Backend-Ash (Due 04/14)
 
+//  Future:
 //  TO DO: might be nice to have a logo or something that redirects to the main page -Eunhye
+//  css and graphs on the bottom. compare to the national average. Frontend(display) Eunhye
 
 class State extends React.Component {
   constructor(props) {

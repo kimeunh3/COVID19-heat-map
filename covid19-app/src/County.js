@@ -4,13 +4,18 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 import { onTextChanged, suggestionSelected, renderSuggestions } from "./Home";
 
-//{일단은 이런 그런 느낌적인 느낌 수정 시급....}
 
-//  TO DO: Redirect to a different county page from county x working. The url is updated but doesn't redirect. //Ashley
+//  Eunhye:
+//  TO DO: might be nice to have a logo or something that redirects to the main page //Eunhye (Due 04/14)
+
+//  Ash:
+//  DONE: Redirect to a different county page from county x working. The url is updated but doesn't redirect. //Ashley
+//  DONE: parsing //Ashley (Due 04/14)
+
+//  Future:
 //  TO DO: css and graphs on the bottom. compare to the national average. //Eunhye
 //  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent //Eunhye
 
-//  TO DO: might be nice to have a logo or something that redirects to the main page //Eunhye (Due 04/14)
 
 //  TO DO: parsing //Ashley (Due 04/14)
 
@@ -26,13 +31,18 @@ class County extends React.Component {
       state: param.split(", ")[1],
       location: "",
       countyStat: null,
+      prev: undefined
     };
+
+    this.refresh = this.refresh.bind(this)
 
     //console.log(this.state.county)
     //console.log(this.state.state)
   }
+  
 
-  async componentDidMount() {
+async componentDidMount() {
+    console.log(this.state.county, this.state.state)
     try {
       await fetch(
         `/countyCovid?county=${this.state.county}&state=${this.state.state}`
@@ -54,12 +64,50 @@ class County extends React.Component {
     }
   }
 
+
+  async componentDidUpdate() {
+    //console.log(this.state.prev, this.state.county, this.state.prev !== this.state.county)
+    if (this.state.prev !== this.state.county) {
+        try {
+          await fetch(
+            `/countyCovid?county=${this.state.county}&state=${this.state.state}`
+          ).then((response) =>
+            response
+              .json()
+              .then((data) => ({
+                data: data,
+                status: response.status,
+              }))
+              .then((res) => {
+                this.setState({ countyStat: res.data, isLoading: false });
+              })
+          );
+        } catch (e) {
+          this.setState({ found: false });
+          alert(e);
+        }
+        this.setState({          
+            prev: this.state.county
+      });
+    }
+}
+
   handleChange = (event) => {
     //console.log("location: ", this.state.location);
     this.setState({
       location: event.target.value,
     });
   };
+
+  refresh(){
+    let County = this.state.location.split(", ")[0];
+    let State = this.state.location.split(", ")[1];
+
+    this.setState({
+        county: County,
+        state: State
+    })
+  }
 
   renderCountyStats() {
     return (
@@ -96,7 +144,9 @@ class County extends React.Component {
                 onChange={this.handleChange}
               />
             </form>
-            <Link to={`/county?id=${this.state.location}`}>Enter</Link>
+            <button onClick={this.refresh}>
+                   Enter
+                </button>
           </div>
           <div className="main">
             <Link to={`/`}>To Main</Link>{" "}
