@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 
 //  Eunhye:
 //  DONE: link map to state page (with param state as id) -Eunhye (Due 04/14)c<Link to={`/state?id=${스테이트 이름}`}></Link>
-//  DONE: drop down menu ish for search bar -Eunhye (Due 04/14)
-//  DONE: maybe a better css? -Eunhye (Due 04/14)
+//  DONE drop down menu ish for search bar -Eunhye (Due 04/14)
+//  DONE : maybe a better css? -Eunhye (Due 04/14)
 //  DONE: legend for colors-Eunhye (Due 04/14)
 
 //  Ash:
@@ -141,23 +141,14 @@ class Home extends React.Component {
         $(".map-img #" + key).css("fill", "rgba(255,0,0,0.15)");
         $("#0_0025").css("background-color", "rgba(255,0,0,0.15)");
       } else if (curr / total_confirmed < 0.00625) {
-        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.3)");
-        $("#0_00625").css("background-color", "rgba(255,0,0,0.3)");
-      } else if (curr / total_confirmed < 0.01875) {
-        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.45)");
-        $("#0_01875").css("background-color", "rgba(255,0,0,0.45)");
+        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.4)");
+        $("#0_00625").css("background-color", "rgba(255,0,0,0.4)");
       } else if (curr / total_confirmed < 0.025) {
-        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.6)");
-        $("#0_025").css("background-color", "rgba(255,0,0,0.6)");
-      } else if (curr / total_confirmed < 0.0375) {
-        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.75)");
-        $("#0_0375").css("background-color", "rgba(255,0,0,0.75)");
-      } else if (curr / total_confirmed < 0.05) {
-        $(".map-img #" + key).css("fill", "rgba(230,0,0)");
-        $("#0_05").css("background-color", "rgba(230,0,0)");
+        $(".map-img #" + key).css("fill", "rgba(255,0,0,0.65)");
+        $("#0_025").css("background-color", "rgba(255,0,0,0.65)");
       } else if (curr / total_confirmed < 0.3) {
-        $(".map-img #" + key).css("fill", "rgba(180,0,0)");
-        $("#0_3").css("background-color", "rgba(180,0,0)");
+        $(".map-img #" + key).css("fill", "rgba(230,0,0)");
+        $("#0_3").css("background-color", "rgba(230,0,0)");
       } else {
         $(".map-img #" + key).css("fill", "rgba(139,0,0)");
         $("#last").css("background-color", "rgba(139,0,0)");
@@ -266,8 +257,7 @@ class Home extends React.Component {
             <p>
               <span className="dot" id="0_0025"></span>
               <span className="range">
-                1-
-                {Math.floor(confirmed_cases * 0.0025)}
+                -{Math.floor(confirmed_cases * 0.0025)}
               </span>
             </p>
             <p>
@@ -278,37 +268,16 @@ class Home extends React.Component {
               </span>
             </p>
             <p>
-              <span className="dot" id="0_01875"></span>
-              <span className="range">
-                {Math.floor(confirmed_cases * 0.00625) + 1}-
-                {Math.floor(confirmed_cases * 0.01875)}{" "}
-              </span>
-            </p>
-            <p>
               <span className="dot" id="0_025"></span>
               <span className="range">
-                {Math.floor(confirmed_cases * 0.01875) + 1}-
+                {Math.floor(confirmed_cases * 0.00625) + 1}-
                 {Math.floor(confirmed_cases * 0.025)}{" "}
-              </span>
-            </p>
-            <p>
-              <span className="dot" id="0_0375"></span>
-              <span className="range">
-                {Math.floor(confirmed_cases * 0.0025) + 1}-
-                {Math.floor(confirmed_cases * 0.0375)}
-              </span>
-            </p>
-            <p>
-              <span className="dot" id="0_05"></span>
-              <span className="range">
-                {Math.floor(confirmed_cases * 0.0375) + 1}-
-                {Math.floor(confirmed_cases * 0.05)}
               </span>
             </p>
             <p>
               <span className="dot" id="0_3"></span>
               <span className="range">
-                {Math.floor(confirmed_cases * 0.05) + 1}-
+                {Math.floor(confirmed_cases * 0.025) + 1}-
                 {Math.floor(confirmed_cases * 0.3)}
               </span>
             </p>
