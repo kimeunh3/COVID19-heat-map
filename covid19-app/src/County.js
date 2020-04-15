@@ -4,17 +4,17 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 
 //  Eunhye:
-//  DONE: might be nice to have a logo or something that redirects to the main page //Eunhye (Due 04/14)
+//  TO DO: button css //Eunhye (Due 04/17)
+//  TO DO: css and graphs on the bottom. compare to the state average. (Due 04/17)
+//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/17)
 
-//  Ash:
-//  DONE: Redirect to a different county page from county x working. The url is updated but doesn't redirect. //Ashley
-//  DONE: parsing //Ashley (Due 04/14)
+//  Ash: 
+//  TO DO: state avg backend (Due 04/17)
 
 //  Future:
-//  TO DO: css and graphs on the bottom. compare to the national average. //Eunhye
-//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent //Eunhye
+//  historical data
 
-//  TO DO: parsing //Ashley (Due 04/14)
+
 const counties = ["Ingham, Michigan", "Boulder, Colorado"];
 
 class County extends React.Component {
@@ -28,11 +28,14 @@ class County extends React.Component {
 
     this.state = {
       isLoading: true,
+      isStateLoading: true,
       county: param.split(", ")[0],
       state: param.split(", ")[1],
       location: "",
       countyStat: null,
-      prev: undefined,
+      stateStat: null,
+      prevState: undefined,
+      prevCounty: undefined,
       suggestions: [],
     };
 
@@ -65,6 +68,55 @@ class County extends React.Component {
     }
   }
 
+
+  async componentDidUpdate() {
+    if (this.state.prevCounty !== this.state.county) {
+      try {
+        await fetch(
+          `/countyCovid?county=${this.state.county}&state=${this.state.state}`
+        ).then((response) =>
+          response
+            .json()
+            .then((data) => ({
+              data: data,
+              status: response.status,
+            }))
+            .then((res) => {
+              this.setState({ countyStat: res.data, isLoading: false });
+            })
+        );
+      } catch (e) {
+        alert(e);
+      }
+      this.setState({
+        prevCounty: this.state.county,
+      });
+    }
+
+    if (this.state.prevState !== this.state.state) {
+      try {
+        await fetch(
+          `/stateCovid?state=${this.state.state}`
+        ).then((response) =>
+          response
+            .json()
+            .then((data) => ({
+              data: data,
+              status: response.status,
+            }))
+            .then((res) => {
+              this.setState({ stateStat: res.data, isStateLoading: false });
+            })
+        );
+      } catch (e) {
+        alert(e);
+      }
+      this.setState({
+        prevState: this.state.state,
+      });
+    }
+  }
+
   onTextChanged = (e) => {
     const value = e.target.value;
     let suggestions = [];
@@ -94,33 +146,6 @@ class County extends React.Component {
         ))}
       </ul>
     );
-  }
-
-  async componentDidUpdate() {
-    //console.log(this.state.prev, this.state.county, this.state.prev !== this.state.county)
-    if (this.state.prev !== this.state.county) {
-      try {
-        await fetch(
-          `/countyCovid?county=${this.state.county}&state=${this.state.state}`
-        ).then((response) =>
-          response
-            .json()
-            .then((data) => ({
-              data: data,
-              status: response.status,
-            }))
-            .then((res) => {
-              this.setState({ countyStat: res.data, isLoading: false });
-            })
-        );
-      } catch (e) {
-        this.setState({ found: false });
-        alert(e);
-      }
-      this.setState({
-        prev: this.state.county,
-      });
-    }
   }
 
   refresh() {
@@ -178,18 +203,15 @@ class County extends React.Component {
               />
               {this.renderSuggestions()}
             </form>
-            <Link
-              to={`/county?id=${this.state.location}`}
-              className="search-button"
-            >
-              Search
-            </Link>
+           <button onClick={this.refresh}>
+                   Enter
+             </button>
           </div>
         </div>
         <div>
           {this.state.isLoading === false
             ? this.renderCountyStats()
-            : "Loading"}
+            : ""}
         </div>
         <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">

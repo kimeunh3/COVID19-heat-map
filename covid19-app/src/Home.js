@@ -7,18 +7,16 @@ import { Link } from "react-router-dom";
 //import { Button } from 'react-bootstrap';
 
 //  Eunhye:
-//  DONE: link map to state page (with param state as id) -Eunhye (Due 04/14)c<Link to={`/state?id=${스테이트 이름}`}></Link>
-//  DONE drop down menu ish for search bar -Eunhye (Due 04/14)
-//  DONE : maybe a better css? -Eunhye (Due 04/14)
-//  DONE: legend for colors-Eunhye (Due 04/14)
+//  TO DO: have to click enter -Eunhye(04/17)
+//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/17)
 
 //  Ash:
-//  TO DO: pass objects to State.js and County.js -Ashley (Due 04/14)
-//  DONE: reload bug -Ashley (Due 04/14)
+//  TO DO: Backend for suggestions -Ashley(04/17)
+//  TO DO: Out of 뭐시기, Unassigned 제외 -Ashley(04/17)
 
 //  Future:
-//  TO DO: have to click enter -Eunhye
-//  Backend for suggestions -Ashley
+//  hover over, state name
+
 
 const state_caps = {
   AL: "Alabama",

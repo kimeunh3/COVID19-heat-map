@@ -4,13 +4,15 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 
 //  Eunhye:
-//  DONE: might be nice to have a logo or something that redirects to the main page //Eunhye (Due 04/14)
+//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/17)
+//  TO DO: css and graphs on the bottom. compare to the national average. (Due 04/17)
 
-//  TO DO: css and graphs on the bottom. compare to the national average. //Backend-Ash (Due 04/14)
+//  Ash:
+//  TO DO: avg us (Due 04/17)
+//  TO DO: pop up error bug (Due 04/17)
 
 //  Future:
-//  TO DO: might be nice to have a logo or something that redirects to the main page -Eunhye
-//  css and graphs on the bottom. compare to the national average. Frontend(display) Eunhye
+//  historical data
 
 const counties = ["Ingham, Michigan", "Boulder, Colorado"];
 
@@ -25,9 +27,11 @@ class State extends React.Component {
 
     this.state = {
       isLoading: true,
+      usStatsLoading: true,
       location: "",
       state: param,
       stateStat: [],
+      usStats: [],
       suggestions: [],
     };
   }
@@ -50,6 +54,23 @@ class State extends React.Component {
     } catch (e) {
       alert(e);
     }
+
+    /*try {
+      await fetch(`/usCovid}`).then((response) =>
+        response
+          .json()
+          .then((data) => ({
+            data: data,
+            status: response.status,
+          }))
+          .then((res) => {
+            this.setState({ usStats: res.data, usStatsLoading: false });
+            //console.log(this.state.stats);
+          })
+      );
+    } catch (e) {
+      alert(e);
+    }*/
   }
 
   onTextChanged = (e) => {
@@ -135,7 +156,7 @@ class State extends React.Component {
           </div>
         </div>
         <div className="centerStats">
-          {this.state.isLoading === false ? this.renderStateStats() : "Loading"}
+          {this.state.isLoading === false ? this.renderStateStats() : ""}
         </div>
         <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">
