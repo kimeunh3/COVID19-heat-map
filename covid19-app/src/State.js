@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 //  TO DO: css and graphs on the bottom. compare to the national average. (Due 04/17)
 
 //  Ash:
-//  TO DO: avg us (Due 04/17)
-//  TO DO: pop up error bug (Due 04/17)
+//  DONE: avg us (Due 04/17) -US has 50 states. Just divide the usStats[0] by 50.
+//  DONE: pop up error bug (Due 04/17)
 
 //  Future:
 //  historical data
@@ -19,8 +19,6 @@ const counties = ["Ingham, Michigan", "Boulder, Colorado"];
 class State extends React.Component {
   constructor(props) {
     super(props);
-
-    this.items = counties;
 
     let search = window.location.search;
     let param = search.toString().split("=")[1].replace(/%20/g, " ");
@@ -33,6 +31,7 @@ class State extends React.Component {
       stateStat: [],
       usStats: [],
       suggestions: [],
+      counties: [],
     };
   }
 
@@ -55,8 +54,8 @@ class State extends React.Component {
       alert(e);
     }
 
-    /*try {
-      await fetch(`/usCovid}`).then((response) =>
+    try {
+      await fetch(`/usCovid`).then((response) =>
         response
           .json()
           .then((data) => ({
@@ -70,15 +69,18 @@ class State extends React.Component {
       );
     } catch (e) {
       alert(e);
-    }*/
+    }
   }
 
   onTextChanged = (e) => {
+    let countiesList = []
+    this.state.counties.forEach(element => countiesList.push(element.city+", "+element.province))
+
     const value = e.target.value;
     let suggestions = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, "i");
-      suggestions = this.items.sort().filter((v) => regex.test(v));
+      suggestions = countiesList.sort().filter((v) => regex.test(v));
     }
     this.setState(() => ({ suggestions, location: value }));
   };
@@ -88,6 +90,31 @@ class State extends React.Component {
       location: value,
       suggestions: [],
     }));
+  }
+
+  updateSuggestion(){
+    if(this.state.prevLocation !== this.state.location){
+      let c = this.state.location.split(", ")[0]
+      let s = this.state.location.split(", ")[1]
+
+     try {
+        fetch(`/suggestions?county=${c}&state=${s}`).then((response) =>
+          response
+            .json()
+            .then((data) => ({
+              data: data,
+              status: response.status,
+            }))
+            .then((res) => {
+              if(res.data.length > 0){
+                this.setState(() => ({counties: res.data }));
+              }
+            })
+        );
+      } catch (e) {
+        alert(e);
+      }
+    }
   }
 
   renderSuggestions() {
@@ -153,6 +180,7 @@ class State extends React.Component {
             >
               Search
             </Link>
+            {this.updateSuggestion()}
           </div>
         </div>
         <div className="centerStats">

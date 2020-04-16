@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 //  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/17)
 
 //  Ash:
-//  TO DO: Backend for suggestions -Ashley(04/17)
+//  DONE: Backend for suggestions -Ashley(04/17)
 //  TO DO: Out of 뭐시기, Unassigned 제외 -Ashley(04/17)
 
 //  Future:
@@ -71,13 +71,11 @@ const state_caps = {
   WI: "Wisconsin",
   WY: "Wyoming",
 };
-const counties = ["Ingham, Michigan", "Boulder, Colorado"];
+//const counties = ["Ingham, Michigan", "Boulder, Colorado"];
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-
-    this.items = counties;
 
     this.state = {
       isLoading: true,
@@ -85,8 +83,10 @@ class Home extends React.Component {
       stats: [],
       usStats: [],
       location: "",
+      prevLocation: "",
       state: "",
       suggestions: [],
+      counties: [],
     };
 
     try {
@@ -158,11 +158,15 @@ class Home extends React.Component {
   }
 
   onTextChanged = (e) => {
+    let countiesList = []
+    this.state.counties.forEach(element => countiesList.push(element.city+", "+element.province))
+
+    //console.log(countiesList)
     const value = e.target.value;
     let suggestions = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, "i");
-      suggestions = this.items.sort().filter((v) => regex.test(v));
+      suggestions = countiesList.sort().filter((v) => regex.test(v));
     }
     this.setState(() => ({ suggestions, location: value }));
   };
@@ -186,6 +190,31 @@ class Home extends React.Component {
         ))}
       </ul>
     );
+  }
+
+  updateSuggestion(){
+    if(this.state.prevLocation !== this.state.location){
+      let c = this.state.location.split(", ")[0]
+      let s = this.state.location.split(", ")[1]
+
+     try {
+        fetch(`/suggestions?county=${c}&state=${s}`).then((response) =>
+          response
+            .json()
+            .then((data) => ({
+              data: data,
+              status: response.status,
+            }))
+            .then((res) => {
+              if(res.data.length > 0){
+                this.setState(() => ({counties: res.data }));
+              }
+            })
+        );
+      } catch (e) {
+        alert(e);
+      }
+    }
   }
 
   updateState(value) {
@@ -238,6 +267,7 @@ class Home extends React.Component {
             >
               Search
             </Link>
+            {this.updateSuggestion()}
           </div>
         </div>
         <div className="centerStats">

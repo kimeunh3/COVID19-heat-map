@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 //  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/17)
 
 //  Ash: 
-//  TO DO: state avg backend (Due 04/17)
+//  DONE: state avg backend (Due 04/17) -stateStat[0].num = number of counties of the state so just divide each criteria by it.
 
 //  Future:
 //  historical data
@@ -37,6 +37,7 @@ class County extends React.Component {
       prevState: undefined,
       prevCounty: undefined,
       suggestions: [],
+      counties: [],
     };
 
     this.refresh = this.refresh.bind(this);
@@ -45,10 +46,10 @@ class County extends React.Component {
     //console.log(this.state.state)
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     console.log(this.state.county, this.state.state);
     try {
-      await fetch(
+      fetch(
         `/countyCovid?county=${this.state.county}&state=${this.state.state}`
       ).then((response) =>
         response
@@ -69,10 +70,10 @@ class County extends React.Component {
   }
 
 
-  async componentDidUpdate() {
+  componentDidUpdate() {
     if (this.state.prevCounty !== this.state.county) {
       try {
-        await fetch(
+        fetch(
           `/countyCovid?county=${this.state.county}&state=${this.state.state}`
         ).then((response) =>
           response
@@ -95,7 +96,7 @@ class County extends React.Component {
 
     if (this.state.prevState !== this.state.state) {
       try {
-        await fetch(
+        fetch(
           `/stateCovid?state=${this.state.state}`
         ).then((response) =>
           response
@@ -105,7 +106,7 @@ class County extends React.Component {
               status: response.status,
             }))
             .then((res) => {
-              this.setState({ stateStat: res.data, isStateLoading: false });
+              this.setState({ stateStat: res.data, isStateLoading: false});
             })
         );
       } catch (e) {
@@ -118,6 +119,9 @@ class County extends React.Component {
   }
 
   onTextChanged = (e) => {
+    let countiesList = []
+    this.state.counties.forEach(element => countiesList.push(element.city+", "+element.province))
+    
     const value = e.target.value;
     let suggestions = [];
     if (value.length > 0) {
@@ -132,6 +136,31 @@ class County extends React.Component {
       location: value,
       suggestions: [],
     }));
+  }
+
+    updateSuggestion(){
+    if(this.state.prevLocation !== this.state.location){
+      let c = this.state.location.split(", ")[0]
+      let s = this.state.location.split(", ")[1]
+
+     try {
+        fetch(`/suggestions?county=${c}&state=${s}`).then((response) =>
+          response
+            .json()
+            .then((data) => ({
+              data: data,
+              status: response.status,
+            }))
+            .then((res) => {
+              if(res.data.length > 0){
+                this.setState(() => ({counties: res.data }));
+              }
+            })
+        );
+      } catch (e) {
+        alert(e);
+      }
+    }
   }
 
   renderSuggestions() {
@@ -206,6 +235,7 @@ class County extends React.Component {
            <button onClick={this.refresh}>
                    Enter
              </button>
+             {this.updateSuggestion()}
           </div>
         </div>
         <div>
