@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 //  Ash:
 //  DONE: Backend for suggestions -Ashley(04/17)
-//  TO DO: Out of 뭐시기, Unassigned 제외 -Ashley(04/17)
+//  DONE: Out of 뭐시기, Unassigned 제외 -Ashley(04/17)
 
 //  Future:
 //  hover over, state name

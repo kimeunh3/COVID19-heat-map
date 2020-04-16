@@ -14,14 +14,9 @@ import { Link } from "react-router-dom";
 //  Future:
 //  historical data
 
-
-const counties = ["Ingham, Michigan", "Boulder, Colorado"];
-
 class County extends React.Component {
   constructor(props) {
     super(props);
-
-    this.items = counties;
 
     let search = window.location.search;
     let param = search.toString().split("=")[1].replace(/%20/g, " ");
@@ -36,6 +31,7 @@ class County extends React.Component {
       stateStat: null,
       prevState: undefined,
       prevCounty: undefined,
+      prevLocation: "",
       suggestions: [],
       counties: [],
     };
@@ -121,12 +117,12 @@ class County extends React.Component {
   onTextChanged = (e) => {
     let countiesList = []
     this.state.counties.forEach(element => countiesList.push(element.city+", "+element.province))
-    
+
     const value = e.target.value;
     let suggestions = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, "i");
-      suggestions = this.items.sort().filter((v) => regex.test(v));
+      suggestions = countiesList.sort().filter((v) => regex.test(v));
     }
     this.setState(() => ({ suggestions, location: value }));
   };
@@ -138,7 +134,7 @@ class County extends React.Component {
     }));
   }
 
-    updateSuggestion(){
+  updateSuggestion(){
     if(this.state.prevLocation !== this.state.location){
       let c = this.state.location.split(", ")[0]
       let s = this.state.location.split(", ")[1]

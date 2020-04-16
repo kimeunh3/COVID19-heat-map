@@ -14,8 +14,6 @@ import { Link } from "react-router-dom";
 //  Future:
 //  historical data
 
-const counties = ["Ingham, Michigan", "Boulder, Colorado"];
-
 class State extends React.Component {
   constructor(props) {
     super(props);
@@ -32,6 +30,7 @@ class State extends React.Component {
       usStats: [],
       suggestions: [],
       counties: [],
+      prevLocation: "",
     };
   }
 
