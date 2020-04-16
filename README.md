@@ -68,7 +68,7 @@ Kafka documentations
    
    3. run `npm start`
    
-   4. test endpoints (countyCovid, allStateCovid, stateCovid, usCovid)
+   4. test endpoints (countyCovid, allStateCovid, stateCovid, usCovid, suggestion)
 	
    ex. go to Postman and try GET `http://localhost:3120/countyCovid/?county=Denver&state=Colorado`
    
@@ -92,13 +92,15 @@ Kafka documentations
 	   "confirmed": 2207,
 	   "deaths": 46,
 	   "recovered": 0,
-	   "lastUpdate": "2020-03-25 23:33:19"
+	   "lastUpdate": "2020-03-25 23:33:19",
+	   "num": 66
 	},
 	{"_id": "Michigan",
 	   "confirmed": 20093,
 	   "deaths": 866,
 	   "recovered": 0,
 	   "lastUpdate": "2020-03-25 23:33:19",
+	   "num": 83
 	},
 	...]`
 	
@@ -109,7 +111,8 @@ Kafka documentations
 	   "confirmed": 2207,
 	   "deaths": 46,
 	   "recovered": 0,
-	   "lastUpdate": "2020-03-25 23:33:19"
+	   "lastUpdate": "2020-03-25 23:33:19",
+	   "num": 66
 	}`
 	
   ex. go to Postman and try GET `http://localhost:3120/usCovid`
@@ -121,6 +124,66 @@ Kafka documentations
 	   "recovered": 21763,
 	   "lastUpdate": "2020-03-25 23:33:19"
 	}`
+  ex. go to Postman and try GET `http://localhost:3120/suggestions?county=Bo&state=undefined`
+      Endpoint used for search bar suggestions. Current limit for suggestions is at 5. 
+   
+	[
+	    {
+		"_id": "5e7d3eb7865bf2d33157daff",
+		"city": "Boise",
+		"province": "Idaho",
+		"country": "US",
+		"lastUpdate": "2020-03-25 23:33:19",
+		"keyId": "Boise, Idaho, US",
+		"confirmed": 0,
+		"deaths": 0,
+		"recovered": 0
+	    },
+	    {
+		"_id": "5e7d3ebc865bf2d33157db00",
+		"city": "Bolivar",
+		"province": "Mississippi",
+		"country": "US",
+		"lastUpdate": "2020-04-13 23:07:54",
+		"keyId": "Bolivar, Mississippi, US",
+		"confirmed": 68,
+		"deaths": 3,
+		"recovered": 0
+	    },
+	    {
+		"_id": "5e7d3ec1865bf2d33157db01",
+		"city": "Bollinger",
+		"province": "Missouri",
+		"country": "US",
+		"lastUpdate": "2020-04-13 23:07:54",
+		"keyId": "Bollinger, Missouri, US",
+		"confirmed": 3,
+		"deaths": 0,
+		"recovered": 0
+	    },
+	    {
+		"_id": "5e7d3ec6865bf2d33157db02",
+		"city": "Bon Homme",
+		"province": "South Dakota",
+		"country": "US",
+		"lastUpdate": "2020-04-13 23:07:54",
+		"keyId": "Bon Homme, South Dakota, US",
+		"confirmed": 4,
+		"deaths": 0,
+		"recovered": 0
+	    },
+	    {
+		"_id": "5e7d3ecb865bf2d33157db03",
+		"city": "Bond",
+		"province": "Illinois",
+		"country": "US",
+		"lastUpdate": "2020-04-13 23:07:54",
+		"keyId": "Bond, Illinois, US",
+		"confirmed": 4,
+		"deaths": 0,
+		"recovered": 0
+	    }
+	]
 	
 	
    ### Run Frontend
