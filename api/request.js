@@ -23,7 +23,7 @@ app.get('/countyCovid', requestHandler(async (req) => {
 
 			let ret = db.collection('data').findOne({city: {'$regex': regexCounty}, province: {'$regex': regexState}, country: "US"})
 	      	ret.then(function(result){
-	      		//console.log(result);
+	      		console.log(result);
 	      		resolve(result);
 	      	})
 			client.close();
@@ -42,6 +42,14 @@ app.get('/allStateCovid', requestHandler(async (req) => {
 
 		  	ret = db.collection('data').aggregate([    
 		    {
+		    	"$match":{
+				    "$and":[
+				      {"city": { $not: /^Out of.*/ }},
+				      {"city": { $not: /^Unassigned.*/ }}
+				    ]
+				 }
+			},
+			{
 		        "$group": {
 		            "_id": "$province",
 		            "confirmed": { $sum: "$confirmed" },
@@ -49,7 +57,6 @@ app.get('/allStateCovid', requestHandler(async (req) => {
 			        "recovered": { $sum: "$recovered" },
 			        "lastUpdate": {$last: "$lastUpdate"}
 		        }
-
 		    }
 			]).toArray(function(err, result){
 				if (err) throw reject(err);
@@ -71,9 +78,13 @@ app.get('/stateCovid', requestHandler(async (req) => {
 
 		  	ret = db.collection('data').aggregate([    
 		  	{
-		  		"$match": {
-		  			"province" : regexState
-		  		}
+		  		"$match":{
+				    "$and":[
+				      {"city": { $not: /^Out of.*/ }},
+				      {"city": { $not: /^Unassigned.*/ }},
+				      {"province" : regexState}
+				    ]
+				 }
 		  	},
 		    {
 		        "$group": {
@@ -102,7 +113,15 @@ app.get('/usCovid', requestHandler(async (req) => {
 		  	if (err) throw err;
 		  	var db = client.db(Data);
 
-		  	ret = db.collection('data').aggregate([    
+		  	ret = db.collection('data').aggregate([   
+		  	{
+		  		"$match":{
+				    "$and":[
+				      {"city": { $not: /^Out of.*/ }},
+				      {"city": { $not: /^Unassigned.*/ }},
+				    ]
+				 }
+		  	},
 		    {
 		        "$group": {
 		            "_id": "$country",
