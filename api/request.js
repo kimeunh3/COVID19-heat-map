@@ -81,7 +81,8 @@ app.get('/stateCovid', requestHandler(async (req) => {
 		            "confirmed": { $sum: "$confirmed" },
 			        "deaths": { $sum: "$deaths" },
 			        "recovered": { $sum: "$recovered" },
-			        "lastUpdate": {$last: "$lastUpdate"}
+			        "lastUpdate": {$last: "$lastUpdate"},
+			        "num" : {$sum: 1}
 		        }
 		    }
 			]).toArray(function(err, result){
@@ -118,6 +119,45 @@ app.get('/usCovid', requestHandler(async (req) => {
 			client.close();
 		});
 	}); 
+
+}));
+
+
+app.get('/suggestions', requestHandler(async (req) => {
+	const { county, state}  = req.query;
+	if (state === 'undefined'){
+		return new Promise(function(resolve, reject) {
+	    MongoClient.connect(CONNECTION_URL, async function (err, client) {
+			if (err) throw err;
+			var db = client.db(Data);
+			var regexCounty = new RegExp(["^", county].join(""), "i");
+
+			let ret = db.collection('data').find({city: {'$regex': regexCounty}, country: "US"}).limit(5).toArray(function(err, result) {
+			  //console.log(result);
+			  resolve(result)
+			});
+
+			client.close();
+		}); 
+	})
+	}else{
+		return new Promise(function(resolve, reject) {
+	    MongoClient.connect(CONNECTION_URL, async function (err, client) {
+			if (err) throw err;
+			var db = client.db(Data);
+			var regexCounty = new RegExp(["^", county].join(""), "i");
+			var regexState = new RegExp(["^", state].join(""), "i");
+
+			let ret = db.collection('data').find({city: {'$regex': regexCounty}, province: {'$regex': regexState}, country: "US"}).toArray(function(err, result) {
+			  //console.log(result);
+			  resolve(result)
+			});
+
+			client.close();
+		}); 
+	})
+
+	}
 
 }));
 
