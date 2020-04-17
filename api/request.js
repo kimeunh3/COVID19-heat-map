@@ -23,7 +23,7 @@ app.get('/countyCovid', requestHandler(async (req) => {
 
 			let ret = db.collection('data').findOne({city: {'$regex': regexCounty}, province: {'$regex': regexState}, country: "US"})
 	      	ret.then(function(result){
-	      		console.log(result);
+	      		//console.log(result);
 	      		resolve(result);
 	      	})
 			client.close();
@@ -82,6 +82,8 @@ app.get('/stateCovid', requestHandler(async (req) => {
 				    "$and":[
 				      {"city": { $not: /^Out of.*/ }},
 				      {"city": { $not: /^Unassigned.*/ }},
+				      {"city": { $not: /^MDOC.*/ }},
+				      {"city": { $not: /^FCI.*/ }},
 				      {"province" : regexState}
 				    ]
 				 }
@@ -93,7 +95,7 @@ app.get('/stateCovid', requestHandler(async (req) => {
 			        "deaths": { $sum: "$deaths" },
 			        "recovered": { $sum: "$recovered" },
 			        "lastUpdate": {$last: "$lastUpdate"},
-			        "num" : {$sum: 1}
+			        "numCounty" : {$sum: 1}
 		        }
 		    }
 			]).toArray(function(err, result){
@@ -119,6 +121,8 @@ app.get('/usCovid', requestHandler(async (req) => {
 				    "$and":[
 				      {"city": { $not: /^Out of.*/ }},
 				      {"city": { $not: /^Unassigned.*/ }},
+				      {"city": { $not: /^MDOC.*/ }},
+				      {"city": { $not: /^FCI.*/ }},
 				    ]
 				 }
 		  	},
@@ -167,7 +171,7 @@ app.get('/suggestions', requestHandler(async (req) => {
 			var regexCounty = new RegExp(["^", county].join(""), "i");
 			var regexState = new RegExp(["^", state].join(""), "i");
 
-			let ret = db.collection('data').find({city: {'$regex': regexCounty}, province: {'$regex': regexState}, country: "US"}).toArray(function(err, result) {
+			let ret = db.collection('data').find({city: {'$regex': regexCounty}, province: {'$regex': regexState}, country: "US"}).limit(5).toArray(function(err, result) {
 			  //console.log(result);
 			  resolve(result)
 			});
