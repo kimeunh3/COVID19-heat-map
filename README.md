@@ -93,14 +93,14 @@ Kafka documentations
 	   "deaths": 46,
 	   "recovered": 0,
 	   "lastUpdate": "2020-03-25 23:33:19",
-	   "num": 66
+	   "numCounty": 66
 	},
 	{"_id": "Michigan",
 	   "confirmed": 20093,
 	   "deaths": 866,
 	   "recovered": 0,
 	   "lastUpdate": "2020-03-25 23:33:19",
-	   "num": 83
+	   "numCounty": 83
 	},
 	...]`
 	
@@ -112,7 +112,7 @@ Kafka documentations
 	   "deaths": 46,
 	   "recovered": 0,
 	   "lastUpdate": "2020-03-25 23:33:19",
-	   "num": 66
+	   "numCounty": 66
 	}`
 	
   ex. go to Postman and try GET `http://localhost:3120/usCovid`
