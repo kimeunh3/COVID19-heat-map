@@ -7,10 +7,9 @@ import BarChart from "react-bar-chart";
 //  Eunhye:
 //  TO DO: button css //Eunhye (Due 04/17)
 //  TO DO: css and graphs on the bottom. compare to the state average. (Due 04/17)
-//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/17)
 
 //  Ash:
-//  DONE: state avg backend (Due 04/17) -stateStat[0].num = number of counties of the state so just divide each criteria by it.
+//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/21)
 
 //  Future:
 //  historical data
