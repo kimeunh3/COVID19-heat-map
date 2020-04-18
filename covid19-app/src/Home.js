@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 //  Future:
 //  hover over, state name
 
-
 const state_caps = {
   AL: "Alabama",
   AK: "Alaska",
@@ -158,8 +157,10 @@ class Home extends React.Component {
   }
 
   onTextChanged = (e) => {
-    let countiesList = []
-    this.state.counties.forEach(element => countiesList.push(element.city+", "+element.province))
+    let countiesList = [];
+    this.state.counties.forEach((element) =>
+      countiesList.push(element.city + ", " + element.province)
+    );
 
     //console.log(countiesList)
     const value = e.target.value;
@@ -192,12 +193,12 @@ class Home extends React.Component {
     );
   }
 
-  updateSuggestion(){
-    if(this.state.prevLocation !== this.state.location){
-      let c = this.state.location.split(", ")[0]
-      let s = this.state.location.split(", ")[1]
+  updateSuggestion() {
+    if (this.state.prevLocation !== this.state.location) {
+      let c = this.state.location.split(", ")[0];
+      let s = this.state.location.split(", ")[1];
 
-     try {
+      try {
         fetch(`/suggestions?county=${c}&state=${s}`).then((response) =>
           response
             .json()
@@ -206,8 +207,8 @@ class Home extends React.Component {
               status: response.status,
             }))
             .then((res) => {
-              if(res.data.length > 0){
-                this.setState(() => ({counties: res.data }));
+              if (res.data.length > 0) {
+                this.setState(() => ({ counties: res.data }));
               }
             })
         );
@@ -249,7 +250,11 @@ class Home extends React.Component {
         <div className="header">
           <h1 className="title">US COVID19 Stats</h1>
           <div className="search-box">
-            <form className="autocomplete">
+            <form
+              className="autocomplete"
+              method="post"
+              action={`/county?id=${this.state.location}`}
+            >
               <input
                 className="input-box"
                 type="location"

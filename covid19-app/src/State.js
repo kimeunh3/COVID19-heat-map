@@ -2,6 +2,7 @@ import React from "react";
 //import ReactDOM from "react-dom";
 import "./Home.css";
 import { Link } from "react-router-dom";
+import BarChart from "react-bar-chart";
 
 //  Eunhye:
 //  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/17)
@@ -72,8 +73,10 @@ class State extends React.Component {
   }
 
   onTextChanged = (e) => {
-    let countiesList = []
-    this.state.counties.forEach(element => countiesList.push(element.city+", "+element.province))
+    let countiesList = [];
+    this.state.counties.forEach((element) =>
+      countiesList.push(element.city + ", " + element.province)
+    );
 
     const value = e.target.value;
     let suggestions = [];
@@ -91,12 +94,12 @@ class State extends React.Component {
     }));
   }
 
-  updateSuggestion(){
-    if(this.state.prevLocation !== this.state.location){
-      let c = this.state.location.split(", ")[0]
-      let s = this.state.location.split(", ")[1]
+  updateSuggestion() {
+    if (this.state.prevLocation !== this.state.location) {
+      let c = this.state.location.split(", ")[0];
+      let s = this.state.location.split(", ")[1];
 
-     try {
+      try {
         fetch(`/suggestions?county=${c}&state=${s}`).then((response) =>
           response
             .json()
@@ -105,8 +108,8 @@ class State extends React.Component {
               status: response.status,
             }))
             .then((res) => {
-              if(res.data.length > 0){
-                this.setState(() => ({counties: res.data }));
+              if (res.data.length > 0) {
+                this.setState(() => ({ counties: res.data }));
               }
             })
         );
@@ -147,6 +150,24 @@ class State extends React.Component {
     );
   }
 
+  renderGraph() {
+    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const data = [
+      { text: this.state.state, value: this.state.stateStat[0].confirmed },
+      { text: "Average", value: this.state.usStats[0].confirmed / 50 },
+    ];
+
+    return (
+      <BarChart
+        ylabel="Quantity"
+        width={500}
+        height={1000}
+        margin={margin}
+        data={data}
+      />
+    );
+  }
+
   render() {
     const { location } = this.state;
     return (
@@ -184,6 +205,11 @@ class State extends React.Component {
         </div>
         <div className="centerStats">
           {this.state.isLoading === false ? this.renderStateStats() : ""}
+        </div>
+        <div className="graph">
+          {this.state.isLoading === false && this.state.usStatsLoading === false
+            ? this.renderGraph()
+            : ""}
         </div>
         <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">

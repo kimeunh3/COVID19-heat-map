@@ -2,13 +2,14 @@ import React from "react";
 //import ReactDOM from "react-dom";
 import "./Home.css";
 import { Link } from "react-router-dom";
+import BarChart from "react-bar-chart";
 
 //  Eunhye:
 //  TO DO: button css //Eunhye (Due 04/17)
 //  TO DO: css and graphs on the bottom. compare to the state average. (Due 04/17)
 //  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/17)
 
-//  Ash: 
+//  Ash:
 //  DONE: state avg backend (Due 04/17) -stateStat[0].num = number of counties of the state so just divide each criteria by it.
 
 //  Future:
@@ -65,7 +66,6 @@ class County extends React.Component {
     }
   }
 
-
   componentDidUpdate() {
     if (this.state.prevCounty !== this.state.county) {
       try {
@@ -92,9 +92,7 @@ class County extends React.Component {
 
     if (this.state.prevState !== this.state.state) {
       try {
-        fetch(
-          `/stateCovid?state=${this.state.state}`
-        ).then((response) =>
+        fetch(`/stateCovid?state=${this.state.state}`).then((response) =>
           response
             .json()
             .then((data) => ({
@@ -102,7 +100,7 @@ class County extends React.Component {
               status: response.status,
             }))
             .then((res) => {
-              this.setState({ stateStat: res.data, isStateLoading: false});
+              this.setState({ stateStat: res.data, isStateLoading: false });
             })
         );
       } catch (e) {
@@ -115,8 +113,10 @@ class County extends React.Component {
   }
 
   onTextChanged = (e) => {
-    let countiesList = []
-    this.state.counties.forEach(element => countiesList.push(element.city+", "+element.province))
+    let countiesList = [];
+    this.state.counties.forEach((element) =>
+      countiesList.push(element.city + ", " + element.province)
+    );
 
     const value = e.target.value;
     let suggestions = [];
@@ -134,12 +134,12 @@ class County extends React.Component {
     }));
   }
 
-  updateSuggestion(){
-    if(this.state.prevLocation !== this.state.location){
-      let c = this.state.location.split(", ")[0]
-      let s = this.state.location.split(", ")[1]
+  updateSuggestion() {
+    if (this.state.prevLocation !== this.state.location) {
+      let c = this.state.location.split(", ")[0];
+      let s = this.state.location.split(", ")[1];
 
-     try {
+      try {
         fetch(`/suggestions?county=${c}&state=${s}`).then((response) =>
           response
             .json()
@@ -148,8 +148,8 @@ class County extends React.Component {
               status: response.status,
             }))
             .then((res) => {
-              if(res.data.length > 0){
-                this.setState(() => ({counties: res.data }));
+              if (res.data.length > 0) {
+                this.setState(() => ({ counties: res.data }));
               }
             })
         );
@@ -200,6 +200,28 @@ class County extends React.Component {
     );
   }
 
+  renderGraph() {
+    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const data = [
+      { text: this.state.state, value: this.state.countyStat.confirmed },
+      {
+        text: "Average",
+        value:
+          this.state.stateStat[0].confirmed / this.state.stateStat[0].numCounty,
+      },
+    ];
+
+    return (
+      <BarChart
+        ylabel="Quantity"
+        width={500}
+        height={1000}
+        margin={margin}
+        data={data}
+      />
+    );
+  }
+
   render() {
     const { location } = this.state;
     return (
@@ -228,15 +250,16 @@ class County extends React.Component {
               />
               {this.renderSuggestions()}
             </form>
-           <button onClick={this.refresh}>
-                   Enter
-             </button>
-             {this.updateSuggestion()}
+            <button onClick={this.refresh}>Enter</button>
+            {this.updateSuggestion()}
           </div>
         </div>
         <div>
-          {this.state.isLoading === false
-            ? this.renderCountyStats()
+          {this.state.isLoading === false ? this.renderCountyStats() : ""}
+        </div>
+        <div className="graph">
+          {this.state.isLoading === false && this.state.isStateLoading === false
+            ? this.renderGraph()
             : ""}
         </div>
         <div className="link">
