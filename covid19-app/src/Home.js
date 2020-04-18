@@ -6,6 +6,9 @@ import $ from "jquery";
 import { Link } from "react-router-dom";
 //import { Button } from 'react-bootstrap';
 
+//  Ash: 
+//  TO DO: Add death diagram (Due 04/21)
+
 
 const state_caps = {
   AL: "Alabama",
