@@ -4,15 +4,8 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 
 //  Eunhye:
-//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/17)
 //  TO DO: css and graphs on the bottom. compare to the national average. (Due 04/17)
 
-//  Ash:
-//  DONE: avg us (Due 04/17) -US has 50 states. Just divide the usStats[0] by 50.
-//  DONE: pop up error bug (Due 04/17)
-
-//  Future:
-//  historical data
 
 class State extends React.Component {
   constructor(props) {

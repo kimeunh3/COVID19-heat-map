@@ -6,17 +6,6 @@ import $ from "jquery";
 import { Link } from "react-router-dom";
 //import { Button } from 'react-bootstrap';
 
-//  Eunhye:
-//  TO DO: have to click enter -Eunhye(04/17)
-//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/17)
-
-//  Ash:
-//  DONE: Backend for suggestions -Ashley(04/17)
-//  DONE: Out of 뭐시기, Unassigned 제외 -Ashley(04/17)
-
-//  Future:
-//  hover over, state name
-
 
 const state_caps = {
   AL: "Alabama",
