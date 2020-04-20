@@ -3,16 +3,18 @@ import React from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import BarChart from "react-bar-chart";
+import Error from "./error.png";
 
 //  Eunhye:
 //  TO DO: button css //Eunhye (Due 04/17)
 //  TO DO: css and graphs on the bottom. compare to the state average. (Due 04/17)
 
 //  Ash:
-//  TO DO: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/21)
+//  DONE: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/21)
 
 //  Future:
 //  historical data
+//  image on a pop up?
 
 class County extends React.Component {
   constructor(props) {
@@ -34,16 +36,19 @@ class County extends React.Component {
       prevLocation: "",
       suggestions: [],
       counties: [],
+      validInput: true,
+      popup: false
     };
 
     this.refresh = this.refresh.bind(this);
 
     //console.log(this.state.county)
     //console.log(this.state.state)
+
   }
 
   componentDidMount() {
-    console.log(this.state.county, this.state.state);
+    //console.log(this.state.county, this.state.state);
     try {
       fetch(
         `/countyCovid?county=${this.state.county}&state=${this.state.state}`
@@ -55,8 +60,11 @@ class County extends React.Component {
             status: response.status,
           }))
           .then((res) => {
-            this.setState({ countyStat: res.data, isLoading: false });
-            //console.log(this.state.countyStat)
+            if(res.data.details === undefined ){
+              this.setState({ countyStat: res.data, isLoading: false });
+            }else{
+              this.setState({ validInput: false, popup: true });
+            }
           })
       );
     } catch (e) {
@@ -78,8 +86,12 @@ class County extends React.Component {
               status: response.status,
             }))
             .then((res) => {
-              this.setState({ countyStat: res.data, isLoading: false });
-            })
+              if(res.data.details === undefined ){
+                this.setState({ countyStat: res.data, isLoading: false });
+              }else{
+                this.setState({ validInput: false, popup: true });
+              }
+          })
         );
       } catch (e) {
         alert(e);
@@ -179,6 +191,14 @@ class County extends React.Component {
     this.setState({
       county: County,
       state: State,
+      isLoading: true,
+      isStateLoading: true,
+    });
+  }
+
+  togglePopup() {
+    this.setState({
+      popup: false
     });
   }
 
@@ -236,6 +256,13 @@ class County extends React.Component {
             <br></br>
             COVID19 Stats
           </h1>
+          <div>
+            {this.state.validInput === false && this.state.popup === true? 
+            <Popup
+              text=<p>{this.state.county.toUpperCase()} {this.state.state.toUpperCase()} is not a valid county. Please enter a different county.</p>
+              closePopup={this.togglePopup.bind(this)}
+            /> : null}
+          </div>
           <div className="search-box">
             <form className="autocomplete">
               <input
@@ -266,6 +293,19 @@ class County extends React.Component {
             {" "}
             Link to CDC{" "}
           </a>
+        </div>
+      </div>
+    );
+  }
+}
+
+class Popup extends React.Component {
+  render() {
+    return (
+      <div className='popup'>
+        <div className='popup_inner'>
+          <h1>{this.props.text}</h1>
+        <button onClick={this.props.closePopup}>close me</button>
         </div>
       </div>
     );
