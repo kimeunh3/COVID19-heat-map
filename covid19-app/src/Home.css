@@ -71,12 +71,16 @@ h1 {
 }
 
 button {
+  position: absolute;
   display: inline-block;
   padding: 6px 10px;
   border-radius: 5px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  left:46.5%;
 }
 .map {
+  padding-top: 80px;
   text-align: center;
 }
 path {

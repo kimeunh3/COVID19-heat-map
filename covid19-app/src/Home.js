@@ -281,6 +281,11 @@ class Home extends React.Component {
             ? this.renderUsStats()
             : "Loading..."}
         </div>
+        <div className="button">
+            <Button variant="primary" onClick={() => this.setState({confirmed: !this.state.confirmed})}>
+              {this.state.confirmed === true ? "View Death Statistics" : "View Confirmed Cases"}
+            </Button>
+          </div>
         <div className="map">
           {this.props.isLoading === true ? (
             "error"
@@ -322,11 +327,6 @@ class Home extends React.Component {
                 {Math.floor(confirmed_cases * 0.3) + 1}-
               </span>
             </p>
-          </div>
-          <div className="button">
-            <Button variant="primary" onClick={() => this.setState({confirmed: !this.state.confirmed})}>
-              {this.state.confirmed === true ? "View Death Statistics" : "View Confirmed Cases"}
-            </Button>
           </div>
         </div>
         <div>
