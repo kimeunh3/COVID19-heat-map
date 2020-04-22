@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import BarChart from "react-bar-chart";
 
 //  Eunhye:
-//  TO DO: css and graphs on the bottom. compare to the national average. (Due 04/17)
-
+//  DONE: css and graphs on the bottom. compare to the national average. (Due 04/17)
 
 class State extends React.Component {
   constructor(props) {
@@ -154,7 +153,7 @@ class State extends React.Component {
       <BarChart
         ylabel="Quantity"
         width={500}
-        height={1000}
+        height={500}
         margin={margin}
         data={data}
       />

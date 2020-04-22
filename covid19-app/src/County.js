@@ -3,11 +3,11 @@ import React from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import BarChart from "react-bar-chart";
-import Error from "./error.png";
+//import Error from "./error.png";
 
 //  Eunhye:
-//  TO DO: button css //Eunhye (Due 04/17)
-//  TO DO: css and graphs on the bottom. compare to the state average. (Due 04/17)
+//  DONE: button css //Eunhye (Due 04/17)
+//  DONE: css and graphs on the bottom. compare to the state average. (Due 04/17)
 
 //  Ash:
 //  DONE: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/21)
@@ -37,18 +37,17 @@ class County extends React.Component {
       suggestions: [],
       counties: [],
       validInput: true,
-      popup: false
+      popup: false,
     };
 
     this.refresh = this.refresh.bind(this);
 
     //console.log(this.state.county)
     //console.log(this.state.state)
-
   }
 
   componentDidMount() {
-    //console.log(this.state.county, this.state.state);
+    console.log(this.state.county, this.state.state);
     try {
       fetch(
         `/countyCovid?county=${this.state.county}&state=${this.state.state}`
@@ -60,9 +59,9 @@ class County extends React.Component {
             status: response.status,
           }))
           .then((res) => {
-            if(res.data.details === undefined ){
+            if (res.data.details === undefined) {
               this.setState({ countyStat: res.data, isLoading: false });
-            }else{
+            } else {
               this.setState({ validInput: false, popup: true });
             }
           })
@@ -86,12 +85,12 @@ class County extends React.Component {
               status: response.status,
             }))
             .then((res) => {
-              if(res.data.details === undefined ){
+              if (res.data.details === undefined) {
                 this.setState({ countyStat: res.data, isLoading: false });
-              }else{
+              } else {
                 this.setState({ validInput: false, popup: true });
               }
-          })
+            })
         );
       } catch (e) {
         alert(e);
@@ -198,7 +197,7 @@ class County extends React.Component {
 
   togglePopup() {
     this.setState({
-      popup: false
+      popup: false,
     });
   }
 
@@ -222,19 +221,21 @@ class County extends React.Component {
   renderGraph() {
     const margin = { top: 20, right: 20, bottom: 30, left: 40 };
     const data = [
-      { text: this.state.state, value: this.state.countyStat.confirmed },
+      { text: this.state.county, value: this.state.countyStat.confirmed },
       {
         text: "Average",
         value:
           this.state.stateStat[0].confirmed / this.state.stateStat[0].numCounty,
       },
     ];
-
+    console.log(
+      this.state.stateStat[0].confirmed / this.state.stateStat[0].numCounty
+    );
     return (
       <BarChart
-        ylabel="Quantity"
+        ylabel="Confirmed"
         width={500}
-        height={1000}
+        height={500}
         margin={margin}
         data={data}
       />
@@ -257,11 +258,16 @@ class County extends React.Component {
             COVID19 Stats
           </h1>
           <div>
-            {this.state.validInput === false && this.state.popup === true? 
-            <Popup
-              text=<p>{this.state.county.toUpperCase()} {this.state.state.toUpperCase()} is not a valid county. Please enter a different county.</p>
-              closePopup={this.togglePopup.bind(this)}
-            /> : null}
+            {this.state.validInput === false && this.state.popup === true ? (
+              <Popup
+                text=<p>
+                  {this.state.county.toUpperCase()}{" "}
+                  {this.state.state.toUpperCase()} is not a valid county. Please
+                  enter a different county.
+                </p>
+                closePopup={this.togglePopup.bind(this)}
+              />
+            ) : null}
           </div>
           <div className="search-box">
             <form className="autocomplete">
@@ -276,7 +282,9 @@ class County extends React.Component {
               />
               {this.renderSuggestions()}
             </form>
-            <button onClick={this.refresh}>Enter</button>
+            <button onClick={this.refresh} className="btn-search">
+              Search
+            </button>
             {this.updateSuggestion()}
           </div>
         </div>
@@ -299,13 +307,13 @@ class County extends React.Component {
   }
 }
 
-class Popup extends React.Component {
+class Popup extends React.Component {
   render() {
     return (
-      <div className='popup'>
-        <div className='popup_inner'>
+      <div className="popup">
+        <div className="popup_inner">
           <h1>{this.props.text}</h1>
-        <button onClick={this.props.closePopup}>close me</button>
+          <button onClick={this.props.closePopup}>close me</button>
         </div>
       </div>
     );

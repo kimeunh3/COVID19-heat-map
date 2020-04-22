@@ -4,9 +4,9 @@ import "./Home.css";
 import { ReactComponent as ReactMap } from "./Blank_US_Map.svg";
 import $ from "jquery";
 import { Link } from "react-router-dom";
-import { Button } from 'react-bootstrap';
+import { Button } from "react-bootstrap";
 
-//  Ash: 
+//  Ash:
 //  DONE: Add death diagram (Due 04/21)
 
 const state_caps = {
@@ -118,36 +118,45 @@ class Home extends React.Component {
     }
   }
 
-  changeStats(){
-    this.setState({ confirmed: !this.state.confirmed});
-    console.log("yay")
+  changeStats() {
+    this.setState({ confirmed: !this.state.confirmed });
+    console.log("yay");
   }
 
   renderUsMap() {
-    let total = this.state.confirmed === true ? this.state.usStats[0].confirmed : this.state.usStats[0].deaths
+    let total =
+      this.state.confirmed === true
+        ? this.state.usStats[0].confirmed
+        : this.state.usStats[0].deaths;
     //let total_death = this.state.usStats[0].deaths;
     //let total_recovered = this.state.usStats[0].recovered;
     for (let i = 0; i < this.state.stats.length; i++) {
       let key = Object.keys(state_caps).find(
         (key) => state_caps[key] === this.state.stats[i]._id
       );
-      let curr = this.state.confirmed === true ? this.state.stats[i].confirmed : this.state.stats[i].deaths
-      let rgba = this.state.confirmed === true ? "rgba(255,0,0," : "rgba(0,0,255,"
+      let curr =
+        this.state.confirmed === true
+          ? this.state.stats[i].confirmed
+          : this.state.stats[i].deaths;
+      let rgba =
+        this.state.confirmed === true ? "rgba(255,0,0," : "rgba(0,0,255,";
       if (curr / total < 0.0025) {
-        $(".map-img #" + key).css("fill", rgba+"0.15)");
-        $("#0_0025").css("background-color", rgba+"0.15)");
+        $(".map-img #" + key).css("fill", rgba + "0.15)");
+        $("#0_0025").css("background-color", rgba + "0.15)");
       } else if (curr / total < 0.00625) {
-        $(".map-img #" + key).css("fill", rgba+"0.4)");
-        $("#0_00625").css("background-color", rgba+"0.4)");
+        $(".map-img #" + key).css("fill", rgba + "0.4)");
+        $("#0_00625").css("background-color", rgba + "0.4)");
       } else if (curr / total < 0.025) {
-        $(".map-img #" + key).css("fill",rgba+"0.65)");
-        $("#0_025").css("background-color", rgba+"0.65)");
+        $(".map-img #" + key).css("fill", rgba + "0.65)");
+        $("#0_025").css("background-color", rgba + "0.65)");
       } else if (curr / total < 0.3) {
-        var color = this.state.confirmed === true ? "rgba(230,0,0)" : "rgba(0,0,230)"
+        var color =
+          this.state.confirmed === true ? "rgba(230,0,0)" : "rgba(0,0,230)";
         $(".map-img #" + key).css("fill", color);
         $("#0_3").css("background-color", color);
       } else {
-        var color = this.state.confirmed === true ? "rgba(139,0,0)" : "rgba(0,0,139)"
+        var color =
+          this.state.confirmed === true ? "rgba(139,0,0)" : "rgba(0,0,139)";
         $(".map-img #" + key).css("fill", color);
         $("#last").css("background-color", color);
       }
@@ -244,7 +253,11 @@ class Home extends React.Component {
 
   render() {
     var confirmed_cases =
-      this.state.usStatsLoading === false ? this.state.confirmed === true ? this.state.usStats[0].confirmed : this.state.usStats[0].deaths : 0;
+      this.state.usStatsLoading === false
+        ? this.state.confirmed === true
+          ? this.state.usStats[0].confirmed
+          : this.state.usStats[0].deaths
+        : 0;
     const { location } = this.state;
     return (
       <div>
@@ -282,10 +295,16 @@ class Home extends React.Component {
             : "Loading..."}
         </div>
         <div className="button">
-            <Button variant="primary" onClick={() => this.setState({confirmed: !this.state.confirmed})}>
-              {this.state.confirmed === true ? "View Death Statistics" : "View Confirmed Cases"}
-            </Button>
-          </div>
+          <Button
+            className="btn-map"
+            variant="primary"
+            onClick={() => this.setState({ confirmed: !this.state.confirmed })}
+          >
+            {this.state.confirmed === true
+              ? "View Death Statistics"
+              : "View Confirmed Cases"}
+          </Button>
+        </div>
         <div className="map">
           {this.props.isLoading === true ? (
             "error"
@@ -293,7 +312,9 @@ class Home extends React.Component {
             <ReactMap className="map-img" alt="map" />
           )}
           <div className="legend">
-            <p>{this.state.confirmed === true ? "confirmed cases" : "deaths"}</p>
+            <p>
+              {this.state.confirmed === true ? "confirmed cases" : "deaths"}
+            </p>
             <p>
               <span className="dot" id="0_0025"></span>
               <span className="range">

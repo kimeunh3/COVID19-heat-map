@@ -69,15 +69,29 @@ h1 {
   position: absolute;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
 }
-
-button {
-  position: absolute;
-  display: inline-block;
-  padding: 6px 10px;
+.button {
+  text-align: center;
+}
+.btn-map {
+  background-color: #4c8bf5;
+  border: none;
+  font-size: 14px;
+  color: white;
+  padding: 10px 10px;
   border-radius: 5px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
-  text-align: center;
-  left:46.5%;
+}
+
+.btn-search {
+  position: absolute;
+  background-color: #4c8bf5;
+  border: none;
+  font-size: 14px;
+  color: white;
+  padding: 9px 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
+  margin-left: 10px;
 }
 .map {
   padding-top: 80px;
@@ -91,10 +105,8 @@ path:hover {
   cursor: pointer;
 }
 .link {
-  position: absolute;
-  bottom: 10px;
-  left:55%;
-  margin-left:-150px;
+  text-align: center;
+  margin: 50px auto;
 }
 .centerStats {
   margin-bottom: 40px;
@@ -156,7 +168,7 @@ span.range {
   right: 0;
   bottom: 0;
   margin: auto;
-  background-color: rgba(0,0,0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .popup_inner {
   position: absolute;
@@ -166,4 +178,27 @@ span.range {
   bottom: 25%;
   margin: auto;
   background: white;
+}
+
+.graph {
+  text-align: center;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
 }
