@@ -10,7 +10,7 @@ import Error from "./imgs/error.png";
 //  TO DO: deaths graph
 
 //  Ash:
-//  TO DO: error handling when input is empty
+//  DONE: error handling when input is empty
 
 class County extends React.Component {
   constructor(props) {
@@ -251,8 +251,8 @@ class County extends React.Component {
             </Link>{" "}
           </div>
           <h1 className="title">
-            {this.state.county !== 'undefined' ? this.state.county.toUpperCase() : ''}
-            {this.state.state !== 'undefined' ? this.state.state.toUpperCase() : ''}{" "}
+            {this.state.county === undefined ? 'empty' :  this.state.county.toUpperCase()}{" "}
+            {this.state.state === undefined ? 'empty' : this.state.state.toUpperCase()}{" "}
             <br></br>
             COVID19 Stats
           </h1>
@@ -260,8 +260,8 @@ class County extends React.Component {
             {this.state.validInput === false && this.state.popup === true ? (
               <Popup
                 text=<p>
-                  {this.state.county.toUpperCase()}{" "}
-                  {this.state.state.toUpperCase()} is not a valid county.
+                  {this.state.county === undefined ? 'empty' :  this.state.county.toUpperCase()}{" "}
+                  {this.state.state === undefined ? 'empty' : this.state.state.toUpperCase()} is not a valid county.
                   Please enter a different county.
                 </p>
                 closePopup={this.togglePopup.bind(this)}
