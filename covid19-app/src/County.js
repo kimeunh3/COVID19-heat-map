@@ -3,18 +3,14 @@ import React from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import BarChart from "react-bar-chart";
-//import Error from "./error.png";
+import Error from "./imgs/error.png";
 
 //  Eunhye:
-//  DONE: button css //Eunhye (Due 04/17)
-//  DONE: css and graphs on the bottom. compare to the state average. (Due 04/17)
+//  TO DO: add image on error handling pop up
+//  TO DO: deaths graph
 
 //  Ash:
-//  DONE: error handling when user input doesn't follow the correct format. <county>, <state> or the data is non-existent (Due 04/21)
-
-//  Future:
-//  historical data
-//  image on a pop up?
+//  TO DO: error handling when input is empty
 
 class County extends React.Component {
   constructor(props) {
@@ -209,9 +205,6 @@ class County extends React.Component {
         </div>
         <div className="stats">deaths: {this.state.countyStat.deaths}</div>
         <div className="stats">
-          recovered: {this.state.countyStat.recovered}
-        </div>
-        <div className="stats">
           last updated: {this.state.countyStat.lastUpdate}
         </div>
       </div>
@@ -220,24 +213,29 @@ class County extends React.Component {
 
   renderGraph() {
     const margin = { top: 20, right: 20, bottom: 30, left: 40 };
-    const data = [
+    const dataConfirmed = [
       { text: this.state.county, value: this.state.countyStat.confirmed },
       {
-        text: "Average",
+        text: "State Average",
         value:
           this.state.stateStat[0].confirmed / this.state.stateStat[0].numCounty,
       },
     ];
-    console.log(
-      this.state.stateStat[0].confirmed / this.state.stateStat[0].numCounty
-    );
+    const dataDeaths = [
+      { text: this.state.county, value: this.state.countyStat.deaths },
+      {
+        text: "State Average",
+        value:
+          this.state.stateStat[0].deaths / this.state.stateStat[0].numCounty,
+      },
+    ];
     return (
       <BarChart
         ylabel="Confirmed"
         width={500}
         height={500}
         margin={margin}
-        data={data}
+        data={dataConfirmed}
       />
     );
   }
@@ -253,7 +251,8 @@ class County extends React.Component {
             </Link>{" "}
           </div>
           <h1 className="title">
-            {this.state.county.toUpperCase()}, {this.state.state.toUpperCase()}{" "}
+            {this.state.county !== 'undefined' ? this.state.county.toUpperCase() : ''}
+            {this.state.state !== 'undefined' ? this.state.state.toUpperCase() : ''}{" "}
             <br></br>
             COVID19 Stats
           </h1>
@@ -262,8 +261,8 @@ class County extends React.Component {
               <Popup
                 text=<p>
                   {this.state.county.toUpperCase()}{" "}
-                  {this.state.state.toUpperCase()} is not a valid county. Please
-                  enter a different county.
+                  {this.state.state.toUpperCase()} is not a valid county.
+                  Please enter a different county.
                 </p>
                 closePopup={this.togglePopup.bind(this)}
               />

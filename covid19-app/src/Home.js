@@ -1,13 +1,13 @@
 import React from "react";
 //import {ReactDOM} from "react-dom";
 import "./Home.css";
-import { ReactComponent as ReactMap } from "./Blank_US_Map.svg";
+import { ReactComponent as ReactMap } from "./imgs/Blank_US_Map.svg";
 import $ from "jquery";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 //  Ash:
-//  DONE: Add death diagram (Due 04/21)
+//  TODO: start deployment Kubernetes
 
 const state_caps = {
   AL: "Alabama",

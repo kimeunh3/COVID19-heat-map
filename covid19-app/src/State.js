@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import BarChart from "react-bar-chart";
 
 //  Eunhye:
-//  DONE: css and graphs on the bottom. compare to the national average. (Due 04/17)
+//  TO DO: deaths graph
+//  TO DO: look into how we can use the svg file.
 
 class State extends React.Component {
   constructor(props) {
