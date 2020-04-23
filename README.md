@@ -3,7 +3,7 @@ Objective: To create a web application which displays real-time statistics of CO
 
 Ashley Kim ashleykim0506@gmail.com
 
-EunHye Kim
+Amy Kim eunhyekim1223@gmail.com
 
 
 ## Credits:
