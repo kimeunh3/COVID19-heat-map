@@ -10,10 +10,14 @@ import json
 from kafka import KafkaProducer
 from kafka.errors import KafkaError
 from time import sleep
+import pandas as pd
+from cred import url
 
 def main():
 
-	url = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats"
+	df = pd.read_csv(url, error_bad_lines=False)
+
+	'''url = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats"
 
 	querystring = {"country":"USA"}
 
@@ -23,6 +27,7 @@ def main():
 	    }
 
 	response = requests.request("GET", url, headers=headers, params=querystring)
+	print(response.text)
 	err, statusCode, msg, data = json.loads(response.text)['error'], json.loads(response.text)['statusCode'], json.loads(response.text)['message'], json.loads(response.text)['data']
 
 	if err is 'True' or statusCode != 200 or msg != 'OK':
@@ -30,17 +35,26 @@ def main():
 		return -1
 
 	locations = data['covid19Stats']
+	'''
 
 	producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
 	                         value_serializer=lambda x: 
 	                         json.dumps(x).encode('utf-8'))
 
+	for index, row in df.iterrows():
+		data_set = {"city": row["Admin2"] , "province": row["Province_State"] ,"county": row["Country_Region"], "active": row["Active"], "lastUpdate": row["Last_Update"], "keyId": row["Combined_Key"], "confirmed": row["Confirmed"],"deaths": row["Deaths"], "recovered": row["Recovered"]}
+		json_dump = json.dumps(data_set)
+		producer.send('covid19', value=json_dump)
+		sleep(5)
+
+
+	'''
 	for i in range(len(locations)):
 		#print(locations[i])
 		data = locations[i]
 		producer.send('covid19', value=data)
 		sleep(5)
-
+	'''
 	return 0
 
 main()
