@@ -21,7 +21,7 @@ db = MongoClient('mongodb+srv://'+username+':'+password+'@coviddata-ulfup.mongod
 collection = db.covid19.data
 
 for message in consumer:
-    message = loads(message.value)
+    message = message.value
     update = collection.count_documents({'keyId': message['keyId']})
     print(update, message['keyId'], message['lastUpdate'])
     if(update > 0):

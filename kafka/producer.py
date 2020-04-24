@@ -37,17 +37,18 @@ def main():
 	locations = data['covid19Stats']
 	'''
 
+	dfUS = df.loc[df['Country_Region'] == "US"]
+
+
 	producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
 	                         value_serializer=lambda x: 
 	                         json.dumps(x).encode('utf-8'))
 
-	for index, row in df.iterrows():
-		if(row["Country_Region"] == "US"):
-			data_set = {"city": row["Admin2"] , "province": row["Province_State"] ,"county": row["Country_Region"], "active": row["Active"], "lastUpdate": row["Last_Update"], "keyId": row["Combined_Key"], "confirmed": row["Confirmed"],"deaths": row["Deaths"], "recovered": row["Recovered"]}
-			json_dump = json.dumps(data_set)
-			producer.send('covid19', value=json_dump)
+	for index, row in dfUS.iterrows():
+		data_set = {"city": row["Admin2"] , "province": row["Province_State"] ,"county": row["Country_Region"], "active": row["Active"], "lastUpdate": row["Last_Update"], "keyId": row["Combined_Key"], "confirmed": row["Confirmed"],"deaths": row["Deaths"], "recovered": row["Recovered"]}
+		#json_dump = json.dumps(data_set)
+		producer.send('covid19', value=data_set)
 		sleep(5)
-
 
 	'''
 	for i in range(len(locations)):
