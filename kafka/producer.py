@@ -42,9 +42,10 @@ def main():
 	                         json.dumps(x).encode('utf-8'))
 
 	for index, row in df.iterrows():
-		data_set = {"city": row["Admin2"] , "province": row["Province_State"] ,"county": row["Country_Region"], "active": row["Active"], "lastUpdate": row["Last_Update"], "keyId": row["Combined_Key"], "confirmed": row["Confirmed"],"deaths": row["Deaths"], "recovered": row["Recovered"]}
-		json_dump = json.dumps(data_set)
-		producer.send('covid19', value=json_dump)
+		if(row["Country_Region"] == "US"):
+			data_set = {"city": row["Admin2"] , "province": row["Province_State"] ,"county": row["Country_Region"], "active": row["Active"], "lastUpdate": row["Last_Update"], "keyId": row["Combined_Key"], "confirmed": row["Confirmed"],"deaths": row["Deaths"], "recovered": row["Recovered"]}
+			json_dump = json.dumps(data_set)
+			producer.send('covid19', value=json_dump)
 		sleep(5)
 
 
