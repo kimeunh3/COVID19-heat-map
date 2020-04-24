@@ -7,7 +7,13 @@ import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 //  Ash:
-//  TODO: start deployment Kubernetes
+//  DONE: web deployment
+//  TODO: Kafka deployment -do we want this?
+//  TODO: API stopped working. Need to find alternative
+
+//  Bug:
+//  TODO: Backend sometimes return data grouped by most recent. Sometimes not.
+//  TODO: regex for boulder /bou/i stopped working
 
 const state_caps = {
   AL: "Alabama",
@@ -110,7 +116,7 @@ class Home extends React.Component {
           }))
           .then((res) => {
             this.setState({ stats: res.data, isLoading: false });
-            //console.log(this.state.stats);
+            //console.log("lastUpdate", this.state.stats.lastUpdate);
           })
       );
     } catch (e) {

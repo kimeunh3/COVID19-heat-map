@@ -134,7 +134,7 @@ class State extends React.Component {
         </div>
         <div className="stats">deaths: {this.state.stateStat[0].deaths}</div>
         <div className="stats">
-          recovered: {this.state.stateStat[0].recovered}
+          recovered: {this.state.stateStat[0].confirmed - this.state.stateStat[0].deaths - this.state.stateStat[0].active}
         </div>
         <div className="stats">
           last updated: {this.state.stateStat[0].lastUpdate}
@@ -146,8 +146,8 @@ class State extends React.Component {
   renderGraph() {
     const margin = { top: 20, right: 20, bottom: 30, left: 40 };
     const data = [
-      { text: this.state.state, value: this.state.stateStat[0].confirmed },
-      { text: "Average", value: this.state.usStats[0].confirmed / 50 },
+      { text: `${this.state.state.toUpperCase()} AVERAGE`, value: this.state.stateStat[0].confirmed },
+      { text: "US AVERAGE", value: this.state.usStats[0].confirmed / 50 },
     ];
 
     return (

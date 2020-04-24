@@ -10,7 +10,8 @@ import Error from "./imgs/error.png";
 //  TO DO: deaths graph
 
 //  Ash:
-//  DONE: error handling when input is empty
+//  DONE: some counties stopped working. A more relaxed regex is applied
+
 
 class County extends React.Component {
   constructor(props) {
@@ -214,9 +215,9 @@ class County extends React.Component {
   renderGraph() {
     const margin = { top: 20, right: 20, bottom: 30, left: 40 };
     const dataConfirmed = [
-      { text: this.state.county, value: this.state.countyStat.confirmed },
+      { text: this.state.county.toUpperCase(), value: this.state.countyStat.confirmed },
       {
-        text: "State Average",
+        text: `${this.state.state.toUpperCase()} AVERAGE`,
         value:
           this.state.stateStat[0].confirmed / this.state.stateStat[0].numCounty,
       },
@@ -224,7 +225,7 @@ class County extends React.Component {
     const dataDeaths = [
       { text: this.state.county, value: this.state.countyStat.deaths },
       {
-        text: "State Average",
+        text: `${this.state.state.toUpperCase()} AVERAGE`,
         value:
           this.state.stateStat[0].deaths / this.state.stateStat[0].numCounty,
       },
