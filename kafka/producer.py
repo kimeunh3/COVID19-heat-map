@@ -15,8 +15,6 @@ from cred import url
 
 def main():
 
-	df = pd.read_csv(url, error_bad_lines=False)
-
 	'''url = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats"
 
 	querystring = {"country":"USA"}
@@ -35,8 +33,15 @@ def main():
 		return -1
 
 	locations = data['covid19Stats']
+
+	for i in range(len(locations)):
+		#print(locations[i])
+		data = locations[i]
+		producer.send('covid19', value=data)
+		sleep(5)
 	'''
 
+	df = pd.read_csv(url, error_bad_lines=False)
 	dfUS = df.loc[df['Country_Region'] == "US"]
 
 
@@ -50,13 +55,6 @@ def main():
 		producer.send('covid19', value=data_set)
 		sleep(5)
 
-	'''
-	for i in range(len(locations)):
-		#print(locations[i])
-		data = locations[i]
-		producer.send('covid19', value=data)
-		sleep(5)
-	'''
 	return 0
 
 main()
