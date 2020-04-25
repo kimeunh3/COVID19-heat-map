@@ -3,9 +3,9 @@ import React from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import BarChart from "react-bar-chart";
-
+import { Button } from "react-bootstrap";
 //  Eunhye:
-//  TO DO: deaths graph
+//  DONE: deaths graph
 //  TO DO: look into how we can use the svg file.
 
 class State extends React.Component {
@@ -25,6 +25,7 @@ class State extends React.Component {
       suggestions: [],
       counties: [],
       prevLocation: "",
+      confirmed: true,
     };
   }
 
@@ -134,7 +135,10 @@ class State extends React.Component {
         </div>
         <div className="stats">deaths: {this.state.stateStat[0].deaths}</div>
         <div className="stats">
-          recovered: {this.state.stateStat[0].confirmed - this.state.stateStat[0].deaths - this.state.stateStat[0].active}
+          recovered:{" "}
+          {this.state.stateStat[0].confirmed -
+            this.state.stateStat[0].deaths -
+            this.state.stateStat[0].active}
         </div>
         <div className="stats">
           last updated: {this.state.stateStat[0].lastUpdate}
@@ -145,9 +149,22 @@ class State extends React.Component {
 
   renderGraph() {
     const margin = { top: 20, right: 20, bottom: 30, left: 40 };
-    const data = [
-      { text: `${this.state.state.toUpperCase()} AVERAGE`, value: this.state.stateStat[0].confirmed },
+    const dataConfirmed = [
+      {
+        text: `${this.state.state.toUpperCase()} AVERAGE`,
+        value: this.state.stateStat[0].confirmed,
+      },
       { text: "US AVERAGE", value: this.state.usStats[0].confirmed / 50 },
+    ];
+    const dataDeaths = [
+      {
+        text: `${this.state.state.toUpperCase()} AVERAGE`,
+        value: this.state.stateStat[0].deaths,
+      },
+      {
+        text: "US AVERAGE",
+        value: this.state.usStats[0].deaths / 50,
+      },
     ];
 
     return (
@@ -156,7 +173,7 @@ class State extends React.Component {
         width={500}
         height={500}
         margin={margin}
-        data={data}
+        data={this.state.confirmed === true ? dataConfirmed : dataDeaths}
       />
     );
   }
@@ -198,6 +215,17 @@ class State extends React.Component {
         </div>
         <div className="centerStats">
           {this.state.isLoading === false ? this.renderStateStats() : ""}
+        </div>
+        <div className="button">
+          <Button
+            className="btn-graph"
+            variant="primary"
+            onClick={() => this.setState({ confirmed: !this.state.confirmed })}
+          >
+            {this.state.confirmed === true
+              ? "View Death Graph"
+              : "View Confirmed Graph"}
+          </Button>
         </div>
         <div className="graph">
           {this.state.isLoading === false && this.state.usStatsLoading === false

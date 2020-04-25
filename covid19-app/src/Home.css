@@ -72,7 +72,8 @@ h1 {
 .button {
   text-align: center;
 }
-.btn-map {
+.btn-map,
+.btn-graph {
   background-color: #4c8bf5;
   border: none;
   font-size: 14px;
@@ -80,6 +81,7 @@ h1 {
   padding: 10px 10px;
   border-radius: 5px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
 }
 
 .btn-search {
@@ -180,8 +182,13 @@ span.range {
   background: white;
 }
 
+img.error-img {
+  width: 30%;
+}
+
 .graph {
   text-align: center;
+  padding-left: 10px;
 }
 
 .bar {
@@ -189,7 +196,7 @@ span.range {
 }
 
 .axis {
-  font: 10px sans-serif;
+  font: 9px sans-serif;
 }
 
 .axis path,
@@ -201,4 +208,7 @@ span.range {
 
 .x.axis path {
   display: none;
+}
+.y.axis .tick {
+  padding-left: 10px;
 }

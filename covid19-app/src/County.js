@@ -4,14 +4,14 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 import BarChart from "react-bar-chart";
 import Error from "./imgs/error.png";
+import { Button } from "react-bootstrap";
 
 //  Eunhye:
-//  TO DO: add image on error handling pop up
-//  TO DO: deaths graph
+//  DONE: add image on error handling pop up
+//  DONE: deaths graph
 
 //  Ash:
 //  DONE: some counties stopped working. A more relaxed regex is applied
-
 
 class County extends React.Component {
   constructor(props) {
@@ -35,6 +35,7 @@ class County extends React.Component {
       counties: [],
       validInput: true,
       popup: false,
+      confirmed: true,
     };
 
     this.refresh = this.refresh.bind(this);
@@ -215,7 +216,10 @@ class County extends React.Component {
   renderGraph() {
     const margin = { top: 20, right: 20, bottom: 30, left: 40 };
     const dataConfirmed = [
-      { text: this.state.county.toUpperCase(), value: this.state.countyStat.confirmed },
+      {
+        text: this.state.county.toUpperCase(),
+        value: this.state.countyStat.confirmed,
+      },
       {
         text: `${this.state.state.toUpperCase()} AVERAGE`,
         value:
@@ -236,7 +240,7 @@ class County extends React.Component {
         width={500}
         height={500}
         margin={margin}
-        data={dataConfirmed}
+        data={this.state.confirmed === true ? dataConfirmed : dataDeaths}
       />
     );
   }
@@ -252,8 +256,12 @@ class County extends React.Component {
             </Link>{" "}
           </div>
           <h1 className="title">
-            {this.state.county === undefined ? 'empty' :  this.state.county.toUpperCase()}{" "}
-            {this.state.state === undefined ? 'empty' : this.state.state.toUpperCase()}{" "}
+            {this.state.county === undefined
+              ? "empty"
+              : this.state.county.toUpperCase()}{" "}
+            {this.state.state === undefined
+              ? "empty"
+              : this.state.state.toUpperCase()}{" "}
             <br></br>
             COVID19 Stats
           </h1>
@@ -261,9 +269,14 @@ class County extends React.Component {
             {this.state.validInput === false && this.state.popup === true ? (
               <Popup
                 text=<p>
-                  {this.state.county === undefined ? 'empty' :  this.state.county.toUpperCase()}{" "}
-                  {this.state.state === undefined ? 'empty' : this.state.state.toUpperCase()} is not a valid county.
-                  Please enter a different county.
+                  {this.state.county === undefined
+                    ? "empty"
+                    : this.state.county.toUpperCase()}{" "}
+                  {this.state.state === undefined
+                    ? "empty"
+                    : this.state.state.toUpperCase()}{" "}
+                  is not a valid county. Please enter a different county.
+                  <img src={Error} className="error-img" />
                 </p>
                 closePopup={this.togglePopup.bind(this)}
               />
@@ -290,6 +303,17 @@ class County extends React.Component {
         </div>
         <div>
           {this.state.isLoading === false ? this.renderCountyStats() : ""}
+        </div>
+        <div className="button">
+          <Button
+            className="btn-graph"
+            variant="primary"
+            onClick={() => this.setState({ confirmed: !this.state.confirmed })}
+          >
+            {this.state.confirmed === true
+              ? "View Death Graph"
+              : "View Confirmed Graph"}
+          </Button>
         </div>
         <div className="graph">
           {this.state.isLoading === false && this.state.isStateLoading === false
