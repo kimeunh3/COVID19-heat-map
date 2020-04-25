@@ -5,12 +5,24 @@ Ashley Kim ashleykim0506@gmail.com
 
 Amy Kim eunhyekim1223@gmail.com
 
+## Published Website:
+
+http://ec2-3-19-234-196.us-east-2.compute.amazonaws.com:3000/
+
+
+## Disclaimer:
+
+The purpose of this project is to provide a visual representation along with statistics to the general public in regards to the SARS-CoV-2 (referred as the novel coronavirus of COVID-19) pandemic in the United States. No monetary profit is seeked from the project. 
+
 
 ## Credits:
 
 COVID19 API:
     KishCom
 		https://rapidapi.com/KishCom/api/covid-19-coronavirus-statistics
+
+COVID19 DATA (Alternative due to API failuer):
+		https://github.com/CSSEGISandData/COVID-19
 		
 Kafka documentations
 		https://towardsdatascience.com/kafka-python-explained-in-10-lines-of-code-800e3e07dad1
