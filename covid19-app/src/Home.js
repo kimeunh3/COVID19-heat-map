@@ -7,13 +7,10 @@ import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 //  Ash:
-//  DONE: web deployment
-//  TODO: Kafka deployment -do we want this?
-//  TODO: API stopped working. Need to find alternative
+//  ?: Kafka deployment -do we want this?
+//  BUG: Backend sometimes return data grouped by most recent. Sometimes not.
+//  BUG: regex for boulder, ingham /bou/i stopped working
 
-//  Bug:
-//  TODO: Backend sometimes return data grouped by most recent. Sometimes not.
-//  TODO: regex for boulder /bou/i stopped working
 
 const state_caps = {
   AL: "Alabama",

@@ -7,11 +7,8 @@ import Error from "./imgs/error.png";
 import { Button } from "react-bootstrap";
 
 //  Eunhye:
-//  DONE: add image on error handling pop up
-//  DONE: deaths graph
+//  TODO: change colors for the graph
 
-//  Ash:
-//  DONE: some counties stopped working. A more relaxed regex is applied
 
 class County extends React.Component {
   constructor(props) {
@@ -206,6 +203,7 @@ class County extends React.Component {
           confirmed: {this.state.countyStat.confirmed}
         </div>
         <div className="stats">deaths: {this.state.countyStat.deaths}</div>
+        <div className="stats">recovered: {this.state.countyStat.confirmed - this.state.countyStat.deaths - this.state.countyStat.active}</div>
         <div className="stats">
           last updated: {this.state.countyStat.lastUpdate}
         </div>
@@ -227,7 +225,7 @@ class County extends React.Component {
       },
     ];
     const dataDeaths = [
-      { text: this.state.county, value: this.state.countyStat.deaths },
+      { text: this.state.county.toUpperCase(), value: this.state.countyStat.deaths },
       {
         text: `${this.state.state.toUpperCase()} AVERAGE`,
         value:

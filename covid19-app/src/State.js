@@ -4,9 +4,14 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 import BarChart from "react-bar-chart";
 import { Button } from "react-bootstrap";
+
 //  Eunhye:
-//  DONE: deaths graph
-//  TO DO: look into how we can use the svg file.
+//  TODO: change colors for the graph
+//  TODO: state county map
+//  1. svg 따로 만드는거 -css 건들일 필요 X, 제일 깔끔 / svg 파일이 많다, 불러와여할게 많음
+//  2. 그냥 원래 있던 svg 쓰돼 그 주만 하이라이트 -제일 간단함 / 공간 낭비 제일 안 이쁨 
+//  3. 2 에서 하이라이트 대신 포커스로 -svg 건들일 필요 x / focus 위치를 predefine 해야함
+
 
 class State extends React.Component {
   constructor(props) {
