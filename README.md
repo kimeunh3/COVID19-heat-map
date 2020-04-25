@@ -12,7 +12,7 @@ http://ec2-3-19-234-196.us-east-2.compute.amazonaws.com:3000/
 
 ## Disclaimer:
 
-The purpose of this project is to provide a visual representation along with statistics to the general public in regards to the SARS-CoV-2 (referred as the novel coronavirus of COVID-19) pandemic in the United States. No monetary profit is seeked from the project. 
+The purpose of this project is to provide a visual representation along with statistics to the general public in regards to the SARS-CoV-2 (referred as the novel coronavirus or COVID-19) pandemic in the United States. No monetary profit is seeked from the project. 
 
 
 ## Credits:
