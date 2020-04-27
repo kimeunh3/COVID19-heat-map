@@ -50,7 +50,7 @@ def main():
 	                         json.dumps(x).encode('utf-8'))
 
 	for index, row in dfUS.iterrows():
-		data_set = {"city": row["Admin2"] , "province": row["Province_State"] ,"county": row["Country_Region"], "active": row["Active"], "lastUpdate": row["Last_Update"], "keyId": row["Combined_Key"], "confirmed": row["Confirmed"],"deaths": row["Deaths"], "recovered": row["Recovered"]}
+		data_set = {"city": row["Admin2"] , "province": row["Province_State"] ,"country": row["Country_Region"], "active": row["Active"], "lastUpdate": row["Last_Update"], "keyId": row["Combined_Key"], "confirmed": row["Confirmed"],"deaths": row["Deaths"], "recovered": row["Recovered"]}
 		#json_dump = json.dumps(data_set)
 		producer.send('covid19', value=data_set)
 		sleep(5)
