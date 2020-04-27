@@ -50,21 +50,19 @@ app.get('/allStateCovid', requestHandler(async (req) => {
 		  	if (err) throw err;
 		  	var db = client.db(Data);
 
-		  	ret = db.collection('data').aggregate([    
+		  	ret = db.collection('data').aggregate([
 		    {
 		    	"$match":{
 				    "$and":[
 				      {"city": { $not: /^Out of.*/ }},
-				      {"city": { $not: /^Unassigned.*/ }}
+				      {"city": { $not: /^Unassigned.*/ }},
+				      {"city": { $not: /^MDOC.*/ }},
+				      {"city": { $not: /^FCI.*/ }},
+				      //{"lastUpdate": "2020-04-24 03:30:50"}
+
 				    ]
 				 }
 			},
-			{
-		  		"$sort": {
-			        "lastUpdate": -1
-		        }
-
-		  	},
 			{
 		        "$group": {
 		            "_id": "$province",
@@ -73,9 +71,25 @@ app.get('/allStateCovid', requestHandler(async (req) => {
 			        "recovered": { $sum: "$recovered" },
 			        "lastUpdate": {$first: "$lastUpdate"}
 		        }
-		    }
+		    },
+		    {
+		    	"$project": {
+		    		"_id": 1,
+		    		"confirmed": 1,
+		    		"deaths": 1,
+		    		"recovered": 1,
+		    		"lastUpdate": "$lastUpdate"
+		    	}
+		    },
+		    {
+		  		"$sort": {
+			        "lastUpdate": -1
+		        }
+
+		  	}, 
 			]).toArray(function(err, result){
 				if (err) throw reject(err);
+				//console.log("allState: ", result[0])
 	          	resolve(result);
 			});
 			client.close();
@@ -92,7 +106,7 @@ app.get('/stateCovid', requestHandler(async (req) => {
 		  	if (err) throw err;
 		  	var db = client.db(Data);
 
-		  	ret = db.collection('data').aggregate([    
+		  	ret = db.collection('data').aggregate([   
 		  	{
 		  		"$match":{
 				    "$and":[
@@ -104,12 +118,6 @@ app.get('/stateCovid', requestHandler(async (req) => {
 				    ]
 				 }
 		  	},
-		  	{
-		  		"$sort": {
-			        "lastUpdate": -1
-		        }
-
-		  	},
 		    {
 		        "$group": {
 		            "_id": "$province",
@@ -120,7 +128,24 @@ app.get('/stateCovid', requestHandler(async (req) => {
 			        "lastUpdate": {$last: "$lastUpdate"},
 			        "numCounty" : {$sum: 1}
 		        }
-		    }
+		    },
+		    {
+		    	"$project": {
+		    		"_id": 1,
+		    		"confirmed": 1,
+		    		"deaths": 1,
+		    		"recovered": 1,
+		    		"active": 1,
+		    		"lastUpdate": "$lastUpdate",
+		    		"numCounty": 1,
+		    	}
+		    },
+		    {
+		  		"$sort": {
+			        "lastUpdate": -1
+		        }
+
+		  	},
 			]).toArray(function(err, result){
 				if (err) throw reject(err);
 				//console.log(result)
@@ -138,9 +163,9 @@ app.get('/usCovid', requestHandler(async (req) => {
 		  	if (err) throw err;
 		  	var db = client.db(Data);
 
-		  	ret = db.collection('data').aggregate([   
+		  	ret = db.collection('data').aggregate([
 		  	{
-		  		"$match":{
+		    	"$match":{
 				    "$and":[
 				      {"city": { $not: /^Out of.*/ }},
 				      {"city": { $not: /^Unassigned.*/ }},
@@ -148,26 +173,34 @@ app.get('/usCovid', requestHandler(async (req) => {
 				      {"city": { $not: /^FCI.*/ }},
 				    ]
 				 }
-		  	},
-		  	{
-		  		"$sort": {
-			        "lastUpdate": -1
-		        }
-
-		  	},
-		    {
+			},
+			{
 		        "$group": {
 		            "_id": "$country",
 		            "confirmed": { $sum: "$confirmed" },
 			        "deaths": { $sum: "$deaths" },
 			        "recovered": { $sum: "$recovered" },
-			        "active": {$sum: "$active"},
 			        "lastUpdate": {$first: "$lastUpdate"}
 		        }
-		    }
+		    },
+		    {
+		    	"$project": {
+		    		"_id": 1,
+		    		"confirmed": 1,
+		    		"deaths": 1,
+		    		"recovered": 1,
+		    		"lastUpdate": "$lastUpdate"
+		    	}
+		    },
+		    {
+		  		"$sort": {
+			        "lastUpdate": -1
+		        }
+
+		  	},
 			]).toArray(function(err, result){
-				//console.log(result[0])
 				if (err) throw reject(err);
+				//console.log("allState: ", result[0])
 	          	resolve(result);
 			});
 			client.close();
@@ -181,7 +214,7 @@ app.get('/suggestions', requestHandler(async (req) => {
 	const { county, state}  = req.query;
 	if (state === 'undefined'){
 		return new Promise(function(resolve, reject) {
-	    MongoClient.connect(CONNECTION_URL, async function (err, client) {
+	    MongoClient.connect(CONNECTION_URL, function (err, client) {
 			if (err) throw err;
 			var db = client.db(Data);
 			var regexCounty = new RegExp(["^", county].join(""), "i");
@@ -198,7 +231,7 @@ app.get('/suggestions', requestHandler(async (req) => {
 	})
 	}else{
 		return new Promise(function(resolve, reject) {
-	    MongoClient.connect(CONNECTION_URL, async function (err, client) {
+	    MongoClient.connect(CONNECTION_URL, function (err, client) {
 			if (err) throw err;
 			var db = client.db(Data);
 			var regexCounty = new RegExp(["^", county].join(""), "i");
