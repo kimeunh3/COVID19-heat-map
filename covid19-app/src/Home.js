@@ -8,7 +8,7 @@ import { Button } from "react-bootstrap";
 
 //  Ash:
 //  ?: Kafka deployment -do we want this?
-//  BUG: Backend sometimes return data grouped by most recent. Sometimes not.
+//  DONE-need more testing though Backend sometimes return data grouped by most recent. Sometimes not.
 //  BUG: regex for boulder, ingham /bou/i stopped working
 
 
@@ -84,6 +84,9 @@ class Home extends React.Component {
       confirmed: true,
     };
 
+  }
+
+  async componentDidMount() {
     try {
       fetch("/usCovid").then((response) =>
         response
@@ -100,9 +103,7 @@ class Home extends React.Component {
     } catch (e) {
       alert(e);
     }
-  }
 
-  async componentDidMount() {
     try {
       await fetch("/allStateCovid").then((response) =>
         response
@@ -119,6 +120,7 @@ class Home extends React.Component {
     } catch (e) {
       alert(e);
     }
+
   }
 
   changeStats() {
