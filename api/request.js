@@ -69,7 +69,8 @@ app.get('/allStateCovid', requestHandler(async (req) => {
 		            "confirmed": { $sum: "$confirmed" },
 			        "deaths": { $sum: "$deaths" },
 			        "recovered": { $sum: "$recovered" },
-			        "lastUpdate": {$first: "$lastUpdate"}
+			      	"active":  { $sum: "$active" },
+			        "lastUpdate": {$last: "$lastUpdate"}
 		        }
 		    },
 		    {
@@ -78,7 +79,8 @@ app.get('/allStateCovid', requestHandler(async (req) => {
 		    		"confirmed": 1,
 		    		"deaths": 1,
 		    		"recovered": 1,
-		    		"lastUpdate": "$lastUpdate"
+		    		"active": 1,
+		    		"lastUpdate": 1
 		    	}
 		    },
 		    {
@@ -136,7 +138,7 @@ app.get('/stateCovid', requestHandler(async (req) => {
 		    		"deaths": 1,
 		    		"recovered": 1,
 		    		"active": 1,
-		    		"lastUpdate": "$lastUpdate",
+		    		"lastUpdate": 1,
 		    		"numCounty": 1,
 		    	}
 		    },
@@ -180,7 +182,8 @@ app.get('/usCovid', requestHandler(async (req) => {
 		            "confirmed": { $sum: "$confirmed" },
 			        "deaths": { $sum: "$deaths" },
 			        "recovered": { $sum: "$recovered" },
-			        "lastUpdate": {$first: "$lastUpdate"}
+			        "active":  { $sum: "$active" },
+			        "lastUpdate": {$last: "$lastUpdate"}
 		        }
 		    },
 		    {
@@ -189,7 +192,8 @@ app.get('/usCovid', requestHandler(async (req) => {
 		    		"confirmed": 1,
 		    		"deaths": 1,
 		    		"recovered": 1,
-		    		"lastUpdate": "$lastUpdate"
+		    		"active": 1,
+		    		"lastUpdate": 1
 		    	}
 		    },
 		    {
