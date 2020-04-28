@@ -25,7 +25,7 @@ def main():
 
 	locations = data['covid19Stats']
 
-	for i in range(10):
+	for i in range(len(locations)):
 		data = locations[i]
 		update = collection.count_documents({'keyId': data['keyId']})
 		if(update > 0):
