@@ -267,7 +267,7 @@ class Home extends React.Component {
     return (
       <div>
         <div className="header">
-          <h1 className="title">US COVID19 Stats</h1>
+          <h1 className="title">US COVID-19 Stats</h1>
           <div className="search-box">
             <form
               className="autocomplete"

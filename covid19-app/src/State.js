@@ -194,7 +194,7 @@ class State extends React.Component {
             </Link>{" "}
           </div>
           <h1 className="title">
-            {this.state.state.toUpperCase()} COVID19 Stats
+            {this.state.state.toUpperCase()} COVID-19 Stats
           </h1>
           <div className="search-box">
             <form className="autocomplete">

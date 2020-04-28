@@ -261,7 +261,7 @@ class County extends React.Component {
               ? "empty"
               : this.state.state.toUpperCase()}{" "}
             <br></br>
-            COVID19 Stats
+            COVID-19 Stats
           </h1>
           <div>
             {this.state.validInput === false && this.state.popup === true ? (
