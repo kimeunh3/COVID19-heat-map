@@ -203,7 +203,7 @@ class County extends React.Component {
           confirmed: {this.state.countyStat.confirmed}
         </div>
         <div className="stats">deaths: {this.state.countyStat.deaths}</div>
-        <div className="stats">recovered: {this.state.countyStat.confirmed - this.state.countyStat.deaths - this.state.countyStat.active}</div>
+        {/*<div className="stats">recovered: {this.state.countyStat.confirmed - this.state.countyStat.deaths - this.state.countyStat.active}</div>*/}
         <div className="stats">
           last updated: {this.state.countyStat.lastUpdate}
         </div>

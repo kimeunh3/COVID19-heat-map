@@ -139,12 +139,12 @@ class State extends React.Component {
           confirmed: {this.state.stateStat[0].confirmed}
         </div>
         <div className="stats">deaths: {this.state.stateStat[0].deaths}</div>
-        <div className="stats">
+        {/*<div className="stats">
           recovered:{" "}
           {this.state.stateStat[0].confirmed -
             this.state.stateStat[0].deaths -
             this.state.stateStat[0].active}
-        </div>
+        </div>*/}
         <div className="stats">
           last updated: {this.state.stateStat[0].lastUpdate}
         </div>

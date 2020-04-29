@@ -154,7 +154,7 @@ class Home extends React.Component {
       } else if (curr / total < 0.025) {
         $(".map-img #" + key).css("fill", rgba + "0.65)");
         $("#0_025").css("background-color", rgba + "0.65)");
-      } else if (curr / total < 0.3) {
+      } else if (curr / total < 0.25) {
         var color =
           this.state.confirmed === true ? "rgba(230,0,0)" : "rgba(0,0,230)";
         $(".map-img #" + key).css("fill", color);
@@ -344,13 +344,13 @@ class Home extends React.Component {
               <span className="dot" id="0_3"></span>
               <span className="range">
                 {Math.floor(confirmed_cases * 0.025) + 1}-
-                {Math.floor(confirmed_cases * 0.3)}
+                {Math.floor(confirmed_cases * 0.25)}
               </span>
             </p>
             <p>
               <span className="dot" id="last"></span>
               <span className="range">
-                {Math.floor(confirmed_cases * 0.3) + 1}-
+                {Math.floor(confirmed_cases * 0.25) + 1}-
               </span>
             </p>
           </div>
