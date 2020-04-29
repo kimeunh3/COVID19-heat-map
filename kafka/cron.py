@@ -21,7 +21,7 @@ def main():
 		return -1
 
 	db = MongoClient('mongodb+srv://'+username+':'+password+'@coviddata-ulfup.mongodb.net/test?retryWrites=true&w=majority')
-	collection = db.covid19.test
+	collection = db.covid19.data
 
 	locations = data['covid19Stats']
 
