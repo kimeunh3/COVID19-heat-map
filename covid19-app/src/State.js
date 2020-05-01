@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import BarChart from "react-bar-chart";
 import { Button } from "react-bootstrap";
 import { ReactComponent as ReactMap } from "./imgs/Usa_counties.svg";
+import $ from "jquery";
 
 //  Eunhye:
 //  TODO: change colors for the graph
 //  TODO: state county map
-//  1. svg 따로 만드는거 -css 건들일 필요 X, 제일 깔끔 / svg 파일이 많다, 불러와여할게 많음
-//  2. 그냥 원래 있던 svg 쓰돼 그 주만 하이라이트 -제일 간단함 / 공간 낭비 제일 안 이쁨
 //  3. 2 에서 하이라이트 대신 포커스로 -svg 건들일 필요 x / focus 위치를 predefine 해야함
+
+var viewbox = require("viewbox");
 
 class State extends React.Component {
   constructor(props) {
@@ -183,6 +184,12 @@ class State extends React.Component {
     );
   }
 
+  renderMap() {
+    var shape = document.getElementsByTagName("svg")[0];
+    console.log(shape);
+    //shape.setAttribute("viewbox", "-250 -250 500 750");
+  }
+
   render() {
     const { location } = this.state;
     return (
@@ -219,7 +226,11 @@ class State extends React.Component {
           </div>
         </div>
         <div className="county-map-container">
-          <ReactMap className="county-map" alt="map" />
+          {this.props.isLoading === true ? (
+            "error"
+          ) : (
+            <svg viewBox="-5 -5 10 10" xmlns="./imgs/Usa_counties.svg"></svg>
+          )}
         </div>
         <div className="centerStats">
           {this.state.isLoading === false ? this.renderStateStats() : ""}
@@ -240,6 +251,8 @@ class State extends React.Component {
             ? this.renderGraph()
             : ""}
         </div>
+        <div>{this.renderMap()}</div>
+
         <div className="link">
           <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">
             {" "}

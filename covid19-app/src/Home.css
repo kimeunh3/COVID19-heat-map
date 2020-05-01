@@ -99,10 +99,10 @@ h1 {
   padding-top: 80px;
   text-align: center;
 }
-path {
+.map path {
   stroke: transparent;
 }
-path:hover {
+.map path:hover {
   stroke: black;
   cursor: pointer;
 }
@@ -211,4 +211,10 @@ img.error-img {
 }
 .y.axis .tick {
   padding-left: 10px;
+}
+
+.county-map-container {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
 }
