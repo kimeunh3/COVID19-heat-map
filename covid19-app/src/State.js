@@ -12,7 +12,7 @@ import $ from "jquery";
 //  TODO: state county map
 //  3. 2 에서 하이라이트 대신 포커스로 -svg 건들일 필요 x / focus 위치를 predefine 해야함
 
-var viewbox = require("viewbox");
+//var viewbox = require("viewbox");
 
 class State extends React.Component {
   constructor(props) {
@@ -186,8 +186,10 @@ class State extends React.Component {
 
   renderMap() {
     var shape = document.getElementsByTagName("svg")[0];
-    console.log(shape);
-    //shape.setAttribute("viewbox", "-250 -250 500 750");
+    console.log("shape: ", shape);
+    if (shape !== undefined){
+      shape.setAttribute("viewBox", "100 100 400 400"); //  min-x, min-y, width, height
+    }
   }
 
   render() {
@@ -229,7 +231,7 @@ class State extends React.Component {
           {this.props.isLoading === true ? (
             "error"
           ) : (
-            <svg viewBox="-5 -5 10 10" xmlns="./imgs/Usa_counties.svg"></svg>
+          <ReactMap className="county-map" alt="map" />
           )}
         </div>
         <div className="centerStats">
