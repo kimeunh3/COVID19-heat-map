@@ -6,11 +6,6 @@ import $ from "jquery";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
-//  Ash:
-//  ?: Kafka deployment -do we want this?
-//  DONE-need more testing though Backend sometimes return data grouped by most recent. Sometimes not.
-//  BUG: regex for boulder, ingham /bou/i stopped working
-
 
 const state_caps = {
   AL: "Alabama",
