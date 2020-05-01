@@ -4,7 +4,7 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 import BarChart from "react-bar-chart";
 import { Button } from "react-bootstrap";
-import { ReactComponent as ReactMap } from "./imgs/Usa_counties_large.svg";
+import { ReactComponent as ReactMap } from "./imgs/Usa_counties.svg";
 
 //  Eunhye:
 //  TODO: change colors for the graph
