@@ -18,24 +18,23 @@ app.get('/countyCovid', requestHandler(async (req) => {
 	    MongoClient.connect(CONNECTION_URL, async function (err, client) {
 			if (err) throw err;
 			var db = client.db(Data);
-			/*
+
 			var regexCounty = new RegExp(["^", county, "$"].join(""), "i");
 			var regexState = new RegExp(["^", state, "$"].join(""), "i");
 
 			let ret = db.collection('data').findOne({city: {'$regex': regexCounty}, province: {'$regex': regexState}, country: "US"})
 	      	ret.then(function(result){
-	      		console.log(result);
+	      		//console.log(result);
 	      		resolve(result);
 	      	})
-	      	*/
 
-			let re = new RegExp([county, ", ", state].join(""), "i");
+			/*let re = new RegExp([county, ", ", state].join(""), "i");
 
 	      	let ret = db.collection('data').findOne({keyId: {'$regex': re}})
 	      	ret.then(function(result){
 	      		//console.log(result);
 	      		resolve(result);
-	      	})
+	      	})*/
 			client.close();
 		}); 
 	})
